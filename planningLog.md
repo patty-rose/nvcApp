@@ -10,4 +10,4 @@
 - 7pm - 60 min: research NVC concepts to include
 - 8:30 - 70 min: create draft of components layout
 
-11/17 10:45 - start React-Router course (1.5 hrs)
+11/17 10:45 - 90 minutes -research React-Router with course https://www.youtube.com/watch?v=59IXY5IDrBA
