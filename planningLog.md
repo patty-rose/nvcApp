@@ -13,3 +13,4 @@
 11/17:
 - 10:45 - 90 minutes - research React-Router with course https://www.youtube.com/watch?v=59IXY5IDrBA
 - 12:30 study context.js and sharing data between components
+- 1:15 study useReducer hook
