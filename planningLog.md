@@ -14,4 +14,5 @@
 - 10:45 - 90 minutes - research React-Router with course https://www.youtube.com/watch?v=59IXY5IDrBA
 - 12:30 (45 min) study context.js and sharing data between components
 - 1:15 (30 min) study useReducer hook 
-- 9:45 practice react with API calls
+- 9:45 (30 min) practice react with API calls
+- 10:15 study to answer q: which database should I use: Firestore or MySQL?
