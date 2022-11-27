@@ -1,5 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
+import db from './firebase.js';
+import { collection, addDoc, onSnapshot } from "firebase/firestore";
 import Home from './pages/Splash';
 import ConflictList from './pages/ConflictList';
 import AddConflict from './pages/AddConflict';
@@ -11,11 +13,34 @@ import Login from './pages/Login';
 function App() {
 
   const [mainConflictList, setMainConflictList] = useState([]);
+  const [error, setError] = useState(null);
 
-  const handleAddingNewConflictToList = (newConflict) => {
-    const newMainConflictList = mainConflictList.concat(newConflict);
-    setMainConflictList({ newMainConflictList});
+  const handleAddingNewConflictToList = async (newConflictData) => {
+    await addDoc(collection(db, "conflicts"), newConflictData);
   }
+
+  useEffect(() => { 
+    const unSubscribe = onSnapshot(
+      collection(db, "conflicts"), 
+      (collectionSnapshot) => {
+        const conflicts = [];
+        collectionSnapshot.forEach((doc) => {
+            conflicts.push({
+              description: doc.data().description, 
+              feeling: doc.data().feeling, 
+              need: doc.data().need, 
+              id: doc.id
+            });
+        });
+        setMainConflictList(conflicts);
+      }, 
+      (error) => {
+        setError(error.message);
+      }
+    );
+
+    return () => unSubscribe();
+  }, []);
 
   return(
     <BrowserRouter>

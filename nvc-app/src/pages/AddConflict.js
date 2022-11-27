@@ -3,10 +3,10 @@ import React from "react";
 import PropTypes from "prop-types"; 
 import ReusableForm from "../components/ReusableForm";
 
-const AddConflict = (props) => {
+function AddConflict(props) {
 
   const navigate = useNavigate();
-  
+
   function handleAddConflictFormSubmission(event) {
     event.preventDefault();
     props.onNewConflictCreation({
