@@ -12,6 +12,8 @@ const ConflictList = (props) => {
           description={conflict.description}
           feeling={conflict.feeling}
           need={conflict.need}
+          needsStatement={conflict.needsStatement}
+          apologyStatement={conflict.apologyStatement}
           id={conflict.id}
           key={conflict.id}/>
       )}

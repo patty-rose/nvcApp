@@ -12,7 +12,9 @@ function AddConflict(props) {
     props.onNewConflictCreation({
       description: event.target.description.value, 
       feeling: event.target.feeling.value, 
-      need: event.target.need.value, 
+      need: event.target.need.value,
+      needsStatement: null,
+      apologyStatemnet: null
     });
     navigate('/conflictList');
   }
