@@ -1,5 +1,5 @@
-import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 import Home from './pages/Splash';
 import ConflictList from './pages/ConflictList';
 import AddConflict from './pages/AddConflict';
@@ -8,43 +8,33 @@ import SharedLayout from './pages/SharedLayout';
 import ConflictDetail from './pages/ConflictDetail';
 import Login from './pages/Login';
 
-class App extends React.Component {
+function App() {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      mainConflictList: [],
-      selectedConflict: null,
-      editing: false
-    };
+  const [mainConflictList, setMainConflictList] = useState([]);
+
+  const handleAddingNewConflictToList = (newConflict) => {
+    const newMainConflictList = mainConflictList.concat(newConflict);
+    setMainConflictList({ newMainConflictList});
   }
 
-  handleAddingNewConflictToList = (newConflict) => {
-    const newMainConflictList = this.state.mainConflictList.concat(newConflict);
-    this.setState({mainConflictList: newMainConflictList});
-  }
+  return(
+    <BrowserRouter>
+      <Routes>
 
-  render(){
+        <Route path='/' element={<SharedLayout />}>
+          <Route index element = {<Home/>} />
 
-    return(
-      <BrowserRouter>
-        <Routes>
+          <Route path='conflictList' element={<ConflictList conflictList = {mainConflictList} />} />
+          <Route path='addConflict' element={<AddConflict onNewConflictCreation={handleAddingNewConflictToList}/>} />
+          <Route path='ConflictDetail' element={<ConflictDetail />} />
 
-          <Route path='/' element={<SharedLayout />}>
-            <Route index element = {<Home/>} />
+          <Route path='login' element={<Login />} />
+          <Route path='*' element={<Error />} />
+        </Route>
 
-            <Route path='conflictList' element={<ConflictList conflictList = {this.state.mainConflictList} />} />
-            <Route path='addConflict' element={<AddConflict onNewConflictCreation={this.handleAddingNewConflictToList}/>} />
-            <Route path='ConflictDetail' element={<ConflictDetail />} />
-
-            <Route path='login' element={<Login />} />
-            <Route path='*' element={<Error />} />
-          </Route>
-
-        </Routes>
-      </BrowserRouter>
-    );
-  }
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
 export default App;

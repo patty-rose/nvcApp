@@ -1,10 +1,12 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import React from "react";
 import PropTypes from "prop-types"; 
 import ReusableForm from "../components/ReusableForm";
 
 const AddConflict = (props) => {
 
+  const navigate = useNavigate();
+  
   function handleAddConflictFormSubmission(event) {
     event.preventDefault();
     props.onNewConflictCreation({
@@ -12,6 +14,7 @@ const AddConflict = (props) => {
       feeling: event.target.feeling.value, 
       need: event.target.need.value, 
     });
+    navigate('/conflictList');
   }
 
   return (
