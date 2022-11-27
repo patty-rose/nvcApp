@@ -10,13 +10,13 @@ const StyledNavbar = () => {
         Home
       </NavLink>
       <NavLink 
-        to='/events'
+        to='/conflictList'
         className={({ isActive }) => (isActive ? 'link active' : 'link' )}
       >
-        Events
+        Conflicts
       </NavLink>
       <NavLink 
-        to='/addEvent'
+        to='/addConflict'
         className={({ isActive }) => (isActive ? 'link active' : 'link' )}
         >
           Add Conflict Event
