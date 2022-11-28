@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import db from './firebase.js';
-import { collection, addDoc, onSnapshot } from "firebase/firestore";
+import { collection, addDoc, onSnapshot, doc, updateDoc, deleteDoc  } from "firebase/firestore";
 import Home from './pages/Splash';
 import ConflictList from './pages/ConflictList';
 import AddConflict from './pages/AddConflict';
@@ -9,6 +9,7 @@ import Error from './pages/Error';
 import SharedLayout from './pages/SharedLayout';
 import ConflictDetail from './pages/ConflictDetail';
 import Login from './pages/Login';
+import EditConflict from './pages/EditConflict';
 
 function App() {
 
@@ -42,6 +43,15 @@ function App() {
     return () => unSubscribe();
   }, []);
 
+  const handleEditingConflictInList = async (conflictToEdit) => {
+    const conflictRef = doc(db, "conflicts", conflictToEdit.id);
+    await updateDoc(conflictRef, conflictToEdit);
+  }
+
+  const handleDeletingConflict = async (id) => {
+    await deleteDoc(doc(db, "conflicts", id));
+  } 
+
   return(
     <BrowserRouter>
       <Routes>
@@ -51,7 +61,9 @@ function App() {
 
           <Route path='conflictList' element={<ConflictList conflictList = {mainConflictList} />} />
           <Route path='addConflict' element={<AddConflict onNewConflictCreation={handleAddingNewConflictToList}/>} />
-          <Route path='ConflictDetail' element={<ConflictDetail />} />
+
+          <Route path = ':conflictId' element = {<ConflictDetail conflictList = {mainConflictList} onClickingDelete={handleDeletingConflict}/>} />
+          <Route path = 'edit/:conflictId' element = {<EditConflict conflictList = {mainConflictList} onEditConflict={handleEditingConflictInList}/>} />
 
           <Route path='login' element={<Login />} />
           <Route path='*' element={<Error />} />
