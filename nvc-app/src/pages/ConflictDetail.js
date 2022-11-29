@@ -1,15 +1,19 @@
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import PropTypes from "prop-types";
 import React from "react";
 
 const ConflictDetail = (props) => {
   const { conflictId } = useParams();
-
-  console.log(props.conflictList);
+  const navigate = useNavigate();
 
   const thisConflict = props.conflictList.find((conflict) => conflict.id === conflictId);
+
   const { description, feeling, need, needsStatement, apologyStatement, id } = thisConflict;
 
+  function handleClickingDelete(id){
+    navigate('/conflictList');
+    props.onClickingDelete(id);
+  }
   return (
     <React.Fragment>
       <div>
@@ -23,7 +27,7 @@ const ConflictDetail = (props) => {
         <Link to={`/edit/${id}`} className='btn'>
         edit</Link>
         <button className='btn'
-        onClick={()=> props.onClickingDelete(id)}>Delete</button>
+        onClick={()=> handleClickingDelete(id)}>Delete</button>
         <hr/>
       </div>
     </React.Fragment>
