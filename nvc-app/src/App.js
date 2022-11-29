@@ -29,7 +29,9 @@ function App() {
             conflicts.push({
               description: doc.data().description, 
               feeling: doc.data().feeling, 
-              need: doc.data().need, 
+              need: doc.data().need,
+              needsStatement: doc.data().needsStatement,
+              apologyStatement: doc.data().apologyStatement, 
               id: doc.id
             });
         });

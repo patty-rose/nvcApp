@@ -1,13 +1,14 @@
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import PropTypes from "prop-types";
 import React from "react";
 
 function EditConflict (props) {
+  const navigate = useNavigate();
   const { conflictId } = useParams();
 
   const thisConflict = props.conflictList.find((conflict) => conflict.id === conflictId);
 
-  const { description, feeling, need, needsStatement, apologyStatement, id } = thisConflict;
+  const { description, feeling, need, needsStatement, apologyStatement } = thisConflict;
 
   function handleEditConflictSubmission(event) {
     event.preventDefault();
@@ -17,7 +18,9 @@ function EditConflict (props) {
       need: event.target.need.value,
       needsStatement: event.target.needsStatement.value,
       apologyStatement: event.target.apologyStatement.value,
+      id: thisConflict.id
     });
+    navigate('/conflictList');
   }
 
   return (
@@ -27,13 +30,15 @@ function EditConflict (props) {
           describe what happened:
           <textarea
             name='description'
-            placeholder={description} />
+            defaultValue={description}
+            // onChange={(e)=>{{description}= e.target.value}} 
+            />
         </label>
         <label>
           How did that make you feel?
           <input
             type='text'
-            placeholder={feeling}
+            defaultValue={feeling}
             name='feeling'
           />
         </label>
@@ -41,19 +46,19 @@ function EditConflict (props) {
           What do you need in the future?
           <textarea
             name='need'
-            placeholder={need} />
+            defaultValue={need} />
         </label>
         <label>
           Needs request statement:
           <textarea
             name='needsStatement'
-            placeholder={needsStatement} />
+            defaultValue={needsStatement} />
         </label>
         <label>
           Apology Statement:
           <textarea
             name='apologyStatement'
-            placeholder={apologyStatement} />
+            defaultValue={apologyStatement} />
         </label>
         <button
         type='submit'>submit edits</button>

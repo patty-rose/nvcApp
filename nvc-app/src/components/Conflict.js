@@ -10,8 +10,8 @@ function Conflict(props){
         <p>what happened: {props.description}</p>
         <p>how you felt: {props.feeling}</p>
         <p>what you need: {props.need}</p>
-        <p>{props.needsStatement}</p>
-        <p>{props.apologyStatement}</p>
+        <p>needs statement: {props.needsStatement}</p>
+        <p>apology statement: {props.apologyStatement}</p>
         <Link to={`/${props.id}`} className='btn'>
         details</Link>
         <hr/>
