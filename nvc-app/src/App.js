@@ -10,7 +10,7 @@ import SharedLayout from './pages/SharedLayout';
 import ConflictDetail from './pages/ConflictDetail';
 import Login from './pages/Login';
 import EditConflict from './pages/EditConflict';
-import NeedsStatement from './pages/NeedsStatement';
+import EditNeedsStatement from './pages/EditNeedsStatement';
 
 function App() {
 
@@ -64,7 +64,8 @@ function App() {
 
           <Route path='conflictList' element={<ConflictList conflictList = {mainConflictList} />} />
           <Route path='addConflict' element={<AddConflict onNewConflictCreation={handleAddingNewConflictToList}/>} />
-          <Route path = 'needsStatement/:conflictId' element = {<NeedsStatement conflictList = {mainConflictList} />} />
+
+          <Route path = 'editNeedsStatement/:conflictId' element = {<EditNeedsStatement conflictList = {mainConflictList} onEditConflict={handleEditingConflictInList} />} />
 
           <Route path = ':conflictId' element = {<ConflictDetail conflictList = {mainConflictList} onClickingDelete={handleDeletingConflict}/>} />
           <Route path = 'edit/:conflictId' element = {<EditConflict conflictList = {mainConflictList} onEditConflict={handleEditingConflictInList}/>} />

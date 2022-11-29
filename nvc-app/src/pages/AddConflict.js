@@ -7,25 +7,17 @@ function AddConflict(props) {
 
   const navigate = useNavigate();
 
-  function createNeedsStatement(feeling, need){
-    const needsStatement = `When you ____, I felt ${feeling}, I need ${need}.`
-    return needsStatement;
-  }
-
   function handleAddConflictFormSubmission(event) {
     event.preventDefault();
-    const need = event.target.need.value;
-    const feeling = event.target.feeling.value;
-    const needsStatement = createNeedsStatement(feeling, need);
     props.onNewConflictCreation({
       description: event.target.description.value, 
-      feeling: feeling, 
-      need: need,
-      needsStatement: needsStatement,
+      feeling: event.target.feeling.value, 
+      need: event.target.need.value,
+      needsStatement: null,
       apologyStatemnet: null
     });
 
-    navigate('/conflictList');
+    navigate(`/conflictList`);
   }
 
   return (
