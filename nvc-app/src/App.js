@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
-import db from './firebase.js';
+import { db } from './firebase.js';
 import { collection, addDoc, onSnapshot, doc, updateDoc, deleteDoc, serverTimestamp  } from "firebase/firestore";
 import Home from './pages/Splash';
 import ConflictList from './pages/ConflictList';
