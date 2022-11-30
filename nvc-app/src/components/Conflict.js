@@ -7,6 +7,7 @@ function Conflict(props){
   return (
     <React.Fragment>
       <div>
+        <h5>{props.title} | {props.conflictDate}</h5>
         <p>what happened: {props.description}</p>
         <p>how you felt: {props.feeling}</p>
         <p>what you need: {props.need}</p>
@@ -21,12 +22,14 @@ function Conflict(props){
 }
 
 Conflict.propTypes = {
+  title: PropTypes.string,
   description: PropTypes.string,
   feeling: PropTypes.string,
   need: PropTypes.string,
   needsStatement: PropTypes.string,
   apologyStatement: PropTypes.string,
-  id: PropTypes.string
+  id: PropTypes.string,
+  conflictDate: PropTypes.string
 }
 
 export default Conflict;

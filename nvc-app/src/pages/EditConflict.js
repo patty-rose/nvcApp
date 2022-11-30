@@ -8,11 +8,13 @@ function EditConflict (props) {
 
   const thisConflict = props.conflictList.find((conflict) => conflict.id === conflictId);
 
-  const { description, feeling, need, needsStatement, apologyStatement } = thisConflict;
+  const { title, description, feeling, need, needsStatement, apologyStatement, conflictDate } = thisConflict;
 
   function handleEditConflictSubmission(event) {
     event.preventDefault();
     props.onEditConflict({
+      title: event.target.title.value,
+      conflictDate: event.target.conflictDate.value, 
       description: event.target.description.value, 
       feeling: event.target.feeling.value, 
       need: event.target.need.value,
@@ -26,6 +28,20 @@ function EditConflict (props) {
   return (
     <React.Fragment>
       <form onSubmit={handleEditConflictSubmission}>
+      <label>
+        Title
+        <input
+          type='text'
+          defaultValue={title}
+          name='title'
+        />
+      </label>
+      <label>when did this happen?
+          <input 
+            type="date" 
+            name="conflictDate"
+            defaultValue={conflictDate} />
+        </label>
         <label>
           describe what happened:
           <textarea

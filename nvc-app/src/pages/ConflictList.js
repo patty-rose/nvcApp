@@ -3,12 +3,14 @@ import Conflict from "../components/Conflict";
 import PropTypes from "prop-types";
 
 const ConflictList = (props) => {
-  
+  console.log(props);
   return (
     <React.Fragment>
       <hr/>
       {props.conflictList.map((conflict) =>
         <Conflict 
+          title={conflict.title}
+          conflictDate={conflict.conflictDate}
           description={conflict.description}
           feeling={conflict.feeling}
           need={conflict.need}

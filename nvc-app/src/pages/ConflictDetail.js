@@ -8,7 +8,7 @@ const ConflictDetail = (props) => {
 
   const thisConflict = props.conflictList.find((conflict) => conflict.id === conflictId);
 
-  const { description, feeling, need, needsStatement, apologyStatement, id } = thisConflict;
+  const { title, description, feeling, need, needsStatement, apologyStatement, id, conflictDate } = thisConflict;
 
   function handleClickingDelete(id){
     navigate('/conflictList');
@@ -17,7 +17,9 @@ const ConflictDetail = (props) => {
   return (
     <React.Fragment>
       <div>
+        <h3>{title}</h3>
         <p>what happened: {description}</p>
+        <p>{conflictDate}</p>
         <p>how you felt: {feeling}</p>
         <p>what you need: {need}</p>
         <p>{needsStatement}</p>

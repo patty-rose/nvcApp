@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import db from './firebase.js';
-import { collection, addDoc, onSnapshot, doc, updateDoc, deleteDoc  } from "firebase/firestore";
+import { collection, addDoc, onSnapshot, doc, updateDoc, deleteDoc, serverTimestamp  } from "firebase/firestore";
 import Home from './pages/Splash';
 import ConflictList from './pages/ConflictList';
 import AddConflict from './pages/AddConflict';
@@ -29,12 +29,14 @@ function App() {
         const conflicts = [];
         collectionSnapshot.forEach((doc) => {
             conflicts.push({
+              title: doc.data().title,
               description: doc.data().description, 
               feeling: doc.data().feeling, 
               need: doc.data().need,
               needsStatement: doc.data().needsStatement,
               apologyStatement: doc.data().apologyStatement, 
-              id: doc.id
+              id: doc.id,
+              conflictDate: doc.data().conflictDate
             });
         });
         setMainConflictList(conflicts);

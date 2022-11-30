@@ -8,7 +8,7 @@ function EditApologyStatement (props) {
 
   const thisConflict = props.conflictList.find((conflict) => conflict.id === conflictId);
 
-  const { description, feeling, need, needsStatement, apologyStatement } = thisConflict;
+  const { title, description, feeling, need, needsStatement, apologyStatement, conflictDate } = thisConflict;
 
   function handleEditApologyStatementSubmission(event) {
     event.preventDefault();
@@ -24,12 +24,12 @@ function EditApologyStatement (props) {
       <h1>create apology statement</h1>
       <h5>description: {description}</h5>
       <p> apology steps:</p>
-      <ol>
-        <li>Say you’re sorry, and name the thing you are apologizing for. In this example, it would go like “sorry I hit you with my book”. </li>
-        <li>Say why it was wrong. “It was wrong to choose to throw the book, and it was wrong to hurt you.”</li>
-        <li>Say what you will do differently next time. “Next time, when I’m frustrated, I will talk to you about it instead of throwing something at you.”</li>
-        <li>Ask for forgiveness. “Do you forgive me?”</li>
-      </ol>
+      <ul>
+        <li>1. Say you’re sorry, and name the thing you are apologizing for. In this example, it would go like “sorry I hit you with my book”. </li>
+        <li>2. Say why it was wrong. “It was wrong to choose to throw the book, and it was wrong to hurt you.”</li>
+        <li>3. Say what you will do differently next time. “Next time, when I’m frustrated, I will talk to you about it instead of throwing something at you.”</li>
+        <li>4. Ask for forgiveness. “Do you forgive me?”</li>
+      </ul>
       <form onSubmit={handleEditApologyStatementSubmission}>
         <label>
           apology statement:
