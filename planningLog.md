@@ -16,3 +16,9 @@
 - 1:15 (30 min) study useReducer hook 
 - 9:45 (30 min) practice react with API calls
 - 10:15 (30 min) study to answer q: which database should I use: Firestore or MySQL?
+
+11/28 to do list for MVP:
+1. refactor EditApologyStatement component for basic functionality
+2. reconsider and diagram flow of app
+3. add timestamp and title to conflict firestore doc entrys
+4. add login/user functionality
