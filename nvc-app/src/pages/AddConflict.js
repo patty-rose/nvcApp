@@ -1,7 +1,6 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import React from "react";
 import PropTypes from "prop-types"; 
-import ReusableForm from "../components/ReusableForm";
 
 function AddConflict(props) {
 
@@ -34,7 +33,7 @@ function AddConflict(props) {
           name='need'
           placeholder='What do you need in the future?' />
         <button
-        type='submit'>{props.buttonText}</button>
+        type='submit'>Submit</button>
       </form>
     </React.Fragment>
   );

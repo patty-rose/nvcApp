@@ -10,13 +10,6 @@ function EditApologyStatement (props) {
 
   const { description, feeling, need, needsStatement, apologyStatement } = thisConflict;
 
-  function createApologyStatement(feeling, need){
-    const apologyStatement = `When you ____, I felt ${feeling}, I need ${need}.`
-    return apologyStatement;
-  }
-
-  const tempStatement = createApologyStatement(feeling, need);
-
   function handleEditApologyStatementSubmission(event) {
     event.preventDefault();
     props.onEditConflict({
@@ -30,12 +23,20 @@ function EditApologyStatement (props) {
     <React.Fragment>
       <h1>create apology statement</h1>
       <h5>description: {description}</h5>
-      <form onSubmit={handleEditapologyStatementSubmission}>
+      <p> apology steps:</p>
+      <ol>
+        <li>Say you’re sorry, and name the thing you are apologizing for. In this example, it would go like “sorry I hit you with my book”. </li>
+        <li>Say why it was wrong. “It was wrong to choose to throw the book, and it was wrong to hurt you.”</li>
+        <li>Say what you will do differently next time. “Next time, when I’m frustrated, I will talk to you about it instead of throwing something at you.”</li>
+        <li>Ask for forgiveness. “Do you forgive me?”</li>
+      </ol>
+      <form onSubmit={handleEditApologyStatementSubmission}>
         <label>
           apology statement:
           <textarea
             name='apologyStatement'
-            defaultValue={tempStatement} />
+            // defaultValue={tempStatement} 
+            />
         </label>
         <button
         type='submit'>submit edits</button>
@@ -49,4 +50,4 @@ EditApologyStatement.propTypes = {
   conflictList: PropTypes.array
 };
 
-export default EditapologyStatement;
+export default EditApologyStatement;

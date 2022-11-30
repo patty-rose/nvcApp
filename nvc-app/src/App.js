@@ -11,6 +11,7 @@ import ConflictDetail from './pages/ConflictDetail';
 import Login from './pages/Login';
 import EditConflict from './pages/EditConflict';
 import EditNeedsStatement from './pages/EditNeedsStatement';
+import EditApologyStatement from './pages/EditApologyStatement';
 
 function App() {
 
@@ -66,6 +67,7 @@ function App() {
           <Route path='addConflict' element={<AddConflict onNewConflictCreation={handleAddingNewConflictToList}/>} />
 
           <Route path = 'editNeedsStatement/:conflictId' element = {<EditNeedsStatement conflictList = {mainConflictList} onEditConflict={handleEditingConflictInList} />} />
+          <Route path = 'editApologyStatement/:conflictId' element = {<EditApologyStatement conflictList = {mainConflictList} onEditConflict={handleEditingConflictInList} />} />
 
           <Route path = ':conflictId' element = {<ConflictDetail conflictList = {mainConflictList} onClickingDelete={handleDeletingConflict}/>} />
           <Route path = 'edit/:conflictId' element = {<EditConflict conflictList = {mainConflictList} onEditConflict={handleEditingConflictInList}/>} />

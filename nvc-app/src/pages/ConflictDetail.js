@@ -28,6 +28,8 @@ const ConflictDetail = (props) => {
         edit</Link>
         <Link to={`/editNeedsStatement/${id}`} className='btn'>
         create needs statement</Link>
+        <Link to={`/editApologyStatement/${id}`} className='btn'>
+        create apology statement</Link>
         <button className='btn'
         onClick={()=> handleClickingDelete(id)}>Delete</button>
         <hr/>
