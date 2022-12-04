@@ -8,7 +8,7 @@ function EditApologyStatement (props) {
 
   const thisConflict = props.conflictList.find((conflict) => conflict.id === conflictId);
 
-  const { title, description, feeling, need, needsStatement, apologyStatement, conflictDate } = thisConflict;
+  const { description, apologyStatement } = thisConflict;
 
   function handleEditApologyStatementSubmission(event) {
     event.preventDefault();
@@ -35,7 +35,7 @@ function EditApologyStatement (props) {
           apology statement:
           <textarea
             name='apologyStatement'
-            // defaultValue={tempStatement} 
+            defaultValue={apologyStatement} 
             />
         </label>
         <button

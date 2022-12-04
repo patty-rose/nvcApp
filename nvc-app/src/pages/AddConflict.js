@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import React from "react";
 import PropTypes from "prop-types";
-import { serverTimestamp } from "firebase/firestore";
 
 function AddConflict(props) {
 
@@ -17,7 +16,8 @@ function AddConflict(props) {
       need: event.target.need.value,
       needsStatement: null,
       apologyStatement: null,
-      conflictDate: event.target.conflictDate.value
+      conflictDate: event.target.conflictDate.value,
+      userId: props.userId
     });
 
     navigate(`/conflictList`);
@@ -53,7 +53,8 @@ function AddConflict(props) {
 }
 
 AddConflict.propTypes = {
-  onNewConflictCreation: PropTypes.func
+  onNewConflictCreation: PropTypes.func,
+  userId: PropTypes.string
 };
 
 export default AddConflict;

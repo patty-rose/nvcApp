@@ -3,7 +3,7 @@ import Conflict from "../components/Conflict";
 import PropTypes from "prop-types";
 
 const ConflictList = (props) => {
-  console.log(props);
+  
   return (
     <React.Fragment>
       <hr/>

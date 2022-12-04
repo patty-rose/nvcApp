@@ -20,7 +20,8 @@ function EditConflict (props) {
       need: event.target.need.value,
       needsStatement: event.target.needsStatement.value,
       apologyStatement: event.target.apologyStatement.value,
-      id: thisConflict.id
+      id: thisConflict.id,
+      userId: thisConflict.userId
     });
     navigate('/conflictList');
   }

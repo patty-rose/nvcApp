@@ -8,7 +8,7 @@ const NeedsStatement = (props) => {
 
   const thisConflict = props.conflictList.find((conflict) => conflict.id === conflictId);
 
-  const { description, feeling, need, needsStatement, apologyStatement } = thisConflict;
+  const { description, feeling, need, needsStatement, apologyStatement, userId } = thisConflict;
 
   function createNeedsStatement(feeling, need){
     const needsStatement = `When you ____, I felt ${feeling}, I need ${need}.`
