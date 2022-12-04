@@ -58,7 +58,11 @@ function App() {
               userId: doc.data().userId
             });
         });
-        setMainConflictList(conflicts);
+        const conflictsByDate = conflicts.sort(function(a,b){
+          return new Date(b.conflictDate) - new Date(a.conflictDate);
+        });
+        console.log(conflictsByDate);
+        setMainConflictList(conflictsByDate);
       }, 
       (error) => {
         setError(error.message);
