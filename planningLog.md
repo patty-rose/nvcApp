@@ -22,3 +22,6 @@
 2. reconsider and diagram flow of app
 3. add timestamp and title to conflict firestore doc entrys
 4. add login/user functionality
+
+12/3:
+2-5 3 hours meet with ux/ui friend to plan the styling of app
