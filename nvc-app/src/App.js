@@ -15,8 +15,6 @@ import EditApologyStatement from './pages/EditApologyStatement';
 
 function App() {
 
-  console.log(userCredential);
-
   const [mainConflictList, setMainConflictList] = useState([]);
   const [error, setError] = useState(null);
 
