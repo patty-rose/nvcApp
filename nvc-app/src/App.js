@@ -26,13 +26,15 @@ function App() {
   const auth = getAuth();
 
   onAuthStateChanged(auth, (user) => {
-    console.log(mainConflictList);
+    console.log(auth.currentUser);
     if (user) {
       setCurrentUid(user.uid);
     } else {
       setCurrentUid(null);
     }
   });
+
+  
   //query firestore db for entire 'conflicts' docs:
   useEffect(() => { 
     const conflictsRef = collection(db, "conflicts");
@@ -61,7 +63,6 @@ function App() {
         const conflictsByDate = conflicts.sort(function(a,b){
           return new Date(b.conflictDate) - new Date(a.conflictDate);
         });
-        console.log(conflictsByDate);
         setMainConflictList(conflictsByDate);
       }, 
       (error) => {
