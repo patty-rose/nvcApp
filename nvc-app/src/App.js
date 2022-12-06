@@ -1,6 +1,6 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
-import { db } from './firebase.js';
+import { db, AuthContextProvider, useAuthState } from './firebase.js';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { collection, addDoc, onSnapshot, doc, updateDoc, deleteDoc, query, where, orderBy } from "firebase/firestore";
 import Home from './pages/Splash';
@@ -22,6 +22,36 @@ function App() {
 
   console.log(mainConflictList);
 
+  
+
+  //authenticated route:
+  const AuthenticatedRoute = ({ component: C, ...props }) => {
+    const { isAuthenticated } = useAuthState()
+    console.log(`AuthenticatedRoute: ${isAuthenticated}`)
+    return (
+      <Route
+        {...props}
+        render={routeProps =>
+          isAuthenticated ? <C {...routeProps} /> : <Login />
+        }
+      />
+    )
+  }
+
+  //unauthenticated route:
+  const UnauthenticatedRoute = ({ component: C, ...props }) => {
+    const { isAuthenticated } = useAuthState()
+    console.log(`UnauthenticatedRoute: ${isAuthenticated}`)
+    return (
+      <Route
+        {...props}
+        render={routeProps =>
+          !isAuthenticated ? <C {...routeProps} /> : <ConflictList />
+        }
+      />
+    )
+  }//add a loading sign-on in your app while the auth check is running
+
   //Auth object & observer:
   const auth = getAuth();
 
@@ -33,7 +63,8 @@ function App() {
       setCurrentUid(null);
     }
   });
-  //query firestore db for entire 'conflicts' docs:
+
+  //query firestore db:
   useEffect(() => { 
     const conflictsRef = collection(db, "conflicts");
     const queryByUidAndDate = query(
@@ -87,27 +118,27 @@ function App() {
   } 
 
   return(
-    <BrowserRouter>
-      <Routes>
+    <AuthContextProvider>
+    
+      <BrowserRouter>
 
-        <Route path='/' element={<SharedLayout />}>
-          <Route index element = {<Home/>} />
+          <UnauthenticatedRoute path='/' element={<SharedLayout />}>
+            <UnauthenticatedRoute index element = {<Home/>} />
 
-          <Route path='conflictList' element={<ConflictList conflictList = {mainConflictList} />} />
-          <Route path='addConflict' element={<AddConflict userId = {currentUid} onNewConflictCreation={handleAddingNewConflictToList}/>} />
+            <AuthenticatedRoute path='conflictList' element={<ConflictList conflictList = {mainConflictList} />} />
+            <AuthenticatedRoute path='addConflict' element={<AddConflict userId = {currentUid} onNewConflictCreation={handleAddingNewConflictToList}/>} />
 
-          <Route path = 'editNeedsStatement/:conflictId' element = {<EditNeedsStatement conflictList = {mainConflictList} onEditConflict={handleEditingConflictInList} />} />
-          <Route path = 'editApologyStatement/:conflictId' element = {<EditApologyStatement conflictList = {mainConflictList} onEditConflict={handleEditingConflictInList} />} />
+            <AuthenticatedRoute path = 'editNeedsStatement/:conflictId' element = {<EditNeedsStatement conflictList = {mainConflictList} onEditConflict={handleEditingConflictInList} />} />
+            <AuthenticatedRoute path = 'editApologyStatement/:conflictId' element = {<EditApologyStatement conflictList = {mainConflictList} onEditConflict={handleEditingConflictInList} />} />
 
-          <Route path = ':conflictId' element = {<ConflictDetail conflictList = {mainConflictList} onClickingDelete={handleDeletingConflict}/>} />
-          <Route path = 'edit/:conflictId' element = {<EditConflict conflictList = {mainConflictList} onEditConflict={handleEditingConflictInList}/>} />
+            <AuthenticatedRoute path = ':conflictId' element = {<ConflictDetail conflictList = {mainConflictList} onClickingDelete={handleDeletingConflict}/>} />
+            <AuthenticatedRoute path = 'edit/:conflictId' element = {<EditConflict conflictList = {mainConflictList} onEditConflict={handleEditingConflictInList}/>} />
 
-          <Route path='login' element={<Login />} />
-          <Route path='*' element={<Error />} />
-        </Route>
-
-      </Routes>
-    </BrowserRouter>
+            <UnauthenticatedRoute path='login' element={<Login />} />
+            <UnauthenticatedRoute path='*' element={<Error />} />
+          </UnauthenticatedRoute>
+      </BrowserRouter>
+    </AuthContextProvider>
   );
 }
 

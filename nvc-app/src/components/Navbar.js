@@ -1,6 +1,12 @@
 import { NavLink } from 'react-router-dom';
+import { getAuth, signOut } from 'firebase/auth';
+import { useAuthState } from '../firebase';
 
-const StyledNavbar = () => {
+const Navbar = () => {
+
+  const { user } = useAuthState();
+  console.log(user);
+
   return (
     <nav className='navbar'>
       <NavLink 
@@ -27,8 +33,9 @@ const StyledNavbar = () => {
         >
           Login
       </NavLink>
+      <button onClick={() => signOut(getAuth())}>Sign out</button>
     </nav>
   );
 };
 
-export default StyledNavbar;
+export default Navbar;

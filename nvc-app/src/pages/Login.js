@@ -1,51 +1,64 @@
-import { auth } from "../firebase.js";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
-import React, { useState } from "react";
+// import { auth } from "../firebase.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import React, { useState, useCallback } from "react";
 
 const Login = () => {
-  const [signUpSuccess, setSignUpSuccess] = useState(null);
-  const [signInSuccess, setSignInSuccess] = useState(null);
-  const [signOutSuccess, setSignOutSuccess] = useState(null);
+  const [signUpMessage, setSignUpMessage] = useState(null);
+  const [signInMessage, setSignInMessage] = useState(null);
+  const [signOutMessage, setSignOutMessage] = useState(null);
 
-  function doSignUp(event) {
-    event.preventDefault();
-    const email = event.target.email.value;
-    const password = event.target.password.value;
-    createUserWithEmailAndPassword(auth, email, password)//The createUserWithEmailAndPassword() function takes three arguments: the auth instance, an email, and a password. It returns a promise
-      .then((userCredential) => {
-        setSignUpSuccess(`You've successfully signed up, ${userCredential.user.email}!`)
-      })
-      .catch((error) => {
-        setSignUpSuccess(`There was an error signing up: ${error.message}!`)
-      });
-  }
+  const auth = getAuth()
+  console.log(auth);
 
-  function doSignIn(event) {
-    event.preventDefault();
-    const email = event.target.signinEmail.value;
-    const password = event.target.signinPassword.value;
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        setSignInSuccess(`You've successfully signed in as ${userCredential.user.email}!`)
-      })
-      .catch((error) => {
-        setSignInSuccess(`There was an error signing in: ${error.message}!`)
-      });
-  }
+  const doSignUp = useCallback(async e => {
+      e.preventDefault();
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+      setSignUpMessage(`You've successfully signed up, NAME!`);
+    } catch (error) {
+      setSignUpMessage(`There was an error signing up: ${error.message}!`);
+    }
+  }, [])
+
+  const doSignIn = useCallback(async e => {
+    e.preventDefault()
+    const email = e.target.signinEmail.value;
+    const password = e.target.signinPassword.value;
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      setSignInMessage(`You've successfully signed in as ADD USER NAME HERE!`);
+    } catch (error) {
+      setSignInMessage(`There was an error signing in: ${error.message}!`)
+    }
+  }, [])
+
+
+
+
+  //   signInWithEmailAndPassword(auth, email, password)
+  //     .then((userCredential) => {
+  //       setSignInMessage(`You've successfully signed in as ${userCredential.user.email}!`)
+  //     })
+  //     .catch((error) => {
+  //       setSignInMessage(`There was an error signing in: ${error.message}!`)
+  //     });
+  // }
 
   function doSignOut() {
     signOut(auth)
       .then(function() {
-        setSignOutSuccess("You have successfully signed out!");
+        setSignOutMessage("You have successfully signed out!");
       }).catch(function(error) {
-        setSignOutSuccess(`There was an error signing out: ${error.message}!`);
+        setSignOutMessage(`There was an error signing out: ${error.message}!`);
       });
   }
 
   return (
     <React.Fragment>
       <h1>Sign up</h1>
-      {signUpSuccess}
+      {signUpMessage}
       <form onSubmit={doSignUp}>
         <input
           type='text'
@@ -59,7 +72,7 @@ const Login = () => {
       </form>
 
       <h1>Sign In</h1>
-      {signInSuccess}
+      {signInMessage}
       <form onSubmit={doSignIn}>
         <input
           type='text'
@@ -73,7 +86,7 @@ const Login = () => {
       </form>
 
       <h1>Sign Out</h1>
-      {signOutSuccess}
+      {signOutMessage}
       <br />
       <button onClick={doSignOut}>Sign out</button>
     </React.Fragment>
