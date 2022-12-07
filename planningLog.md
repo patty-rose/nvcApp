@@ -25,3 +25,6 @@
 
 12/3:
 2-5 3 hours meet with ux/ui friend to plan the styling of app
+
+12/5:
+3 hours following authenticated routes with react router and firebase tutorial
