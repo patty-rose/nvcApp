@@ -20,16 +20,19 @@ function App() {
   const [mainConflictList, setMainConflictList] = useState([]);
   const [error, setError] = useState(null);
   const [currentUid, setCurrentUid] = useState(null);
+  const [currentUser, setCurrentUser] = useState(null);
 
-  console.log(mainConflictList);
+  console.log("list:", mainConflictList);
+  console.log("user:", currentUser);
+  console.log("user Id:", currentUser?.uid);
 
   //Auth object & observer:
   const auth = getAuth();
 
   onAuthStateChanged(auth, (user) => {
-    console.log(auth.currentUser);
     if (user) {
       setCurrentUid(user.uid);
+      setCurrentUser(user);
     } else {
       setCurrentUid(null);
     }
