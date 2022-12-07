@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import { db } from './firebase.js';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { collection, addDoc, onSnapshot, doc, updateDoc, deleteDoc, query, where, orderBy } from "firebase/firestore";
+import { collection, addDoc, onSnapshot, doc, updateDoc, deleteDoc, query, where } from "firebase/firestore";
 import Home from './pages/Splash';
 import ConflictList from './pages/ConflictList';
 import AddConflict from './pages/AddConflict';
@@ -10,6 +10,7 @@ import Error from './pages/Error';
 import SharedLayout from './pages/SharedLayout';
 import ConflictDetail from './pages/ConflictDetail';
 import Login from './pages/Login';
+import SignUp from './pages/SignUp';
 import EditConflict from './pages/EditConflict';
 import EditNeedsStatement from './pages/EditNeedsStatement';
 import EditApologyStatement from './pages/EditApologyStatement';
@@ -104,6 +105,7 @@ function App() {
           <Route path = 'edit/:conflictId' element = {<EditConflict conflictList = {mainConflictList} onEditConflict={handleEditingConflictInList}/>} />
 
           <Route path='login' element={<Login />} />
+          <Route path='SignUp' element={<SignUp />} />
           <Route path='*' element={<Error />} />
         </Route>
 
