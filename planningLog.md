@@ -28,3 +28,5 @@
 
 12/5:
 3 hours following authenticated routes with react router and firebase tutorial
+
+12/7 4 hours authentication logic and routing
