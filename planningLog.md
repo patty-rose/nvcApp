@@ -30,3 +30,11 @@
 3 hours following authenticated routes with react router and firebase tutorial
 
 12/7 4 hours authentication logic and routing
+
+12/8 to do list:
+1. conditional navbar
+2. update add conflict form pages flow
+3. incorporate voice to text
+4. incorporate tone reader API
+5. incorporate verb finder API
+6. style
