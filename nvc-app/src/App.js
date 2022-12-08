@@ -93,6 +93,7 @@ function App() {
 
   return(
     <BrowserRouter>
+    {/* potential to wrap App component in index.js with <BroweserRouter> */}
       <Routes>
 
         <Route path='/' element={<SharedLayout />}>
