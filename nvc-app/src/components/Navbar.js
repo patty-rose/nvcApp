@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 
-const StyledNavbar = () => {
+const Navbar = () => {
   return (
     <nav className='navbar'>
       <NavLink 
@@ -9,6 +9,8 @@ const StyledNavbar = () => {
       >
         Home
       </NavLink>
+
+      {/* user */}
       <NavLink 
         to='/conflictList'
         className={({ isActive }) => (isActive ? 'link active' : 'link' )}
@@ -21,11 +23,13 @@ const StyledNavbar = () => {
         >
           Add Conflict Event
       </NavLink>
+
+      {/* no user */}
       <NavLink 
         to='/login'
         className={({ isActive }) => (isActive ? 'link active' : 'link' )}
         >
-          Login
+          Login/Logout
       </NavLink>
       <NavLink 
         to='/SignUp'
@@ -37,4 +41,4 @@ const StyledNavbar = () => {
   );
 };
 
-export default StyledNavbar;
+export default Navbar;

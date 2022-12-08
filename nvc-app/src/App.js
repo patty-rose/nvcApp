@@ -1,7 +1,6 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import { db } from './firebase.js';
-import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { collection, addDoc, onSnapshot, doc, updateDoc, deleteDoc, query, where } from "firebase/firestore";
 import Home from './pages/Splash';
 import ConflictList from './pages/ConflictList';
@@ -14,12 +13,14 @@ import SignUp from './pages/SignUp';
 import EditConflict from './pages/EditConflict';
 import EditNeedsStatement from './pages/EditNeedsStatement';
 import EditApologyStatement from './pages/EditApologyStatement';
+import TEMP from './pages/TEMP.js';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+
 
 function App() {
   //state:
   const [mainConflictList, setMainConflictList] = useState([]);
   const [error, setError] = useState(null);
-  const [currentUid, setCurrentUid] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
 
   console.log("list:", mainConflictList);
@@ -31,20 +32,28 @@ function App() {
 
   onAuthStateChanged(auth, (user) => {
     if (user) {
-      setCurrentUid(user.uid);
+      // localStorage.setItem("authUser", JSON.stringify(authUser));
       setCurrentUser(user);
     } else {
-      setCurrentUid(null);
+      setCurrentUser(null);
+      // localStorage.removeItem("authUser");
     }
-  });
+  });//if using local storage also update useState(JSON.parse(localStorage.getItem("authUser")!))
 
+  //protected route comp:
+  const ProtectedRoute = ({ children }) => {
+    if (!currentUser) {
+      return <Navigate to='/' />;
+    }
+    return children;
+  };
   
   //query firestore db for entire 'conflicts' docs:
   useEffect(() => { 
     const conflictsRef = collection(db, "conflicts");
     const queryByUidAndDate = query(
       conflictsRef,
-      where("userId", "==", currentUid)
+      where("userId", "==", currentUser && currentUser.uid)
     );
 
     const unSubscribe = onSnapshot(
@@ -75,7 +84,7 @@ function App() {
     );
 
     return () => unSubscribe();
-  }, [currentUid]);
+  }, [currentUser]);
 
   //CRUD handlers:
   const handleAddingNewConflictToList = async (newConflictData) => {
@@ -93,26 +102,35 @@ function App() {
 
   return(
     <BrowserRouter>
-      <Routes>
+    {/* potential to wrap App component in index.js with <BrowserRouter> */}
+        <Routes>
+          <Route path='/' element={<SharedLayout />}>
+            <Route index element = {<Home/>} />
+            <Route path='login' element={<Login />} />
+            <Route path='SignUp' element={<SignUp />} />
+            <Route path='*' element={<Error />} />
 
-        <Route path='/' element={<SharedLayout />}>
-          <Route index element = {<Home/>} />
+            <Route path='conflictList' element={<ProtectedRoute><ConflictList conflictList = {mainConflictList} /></ProtectedRoute>} />
+            <Route path='addConflict' element={<ProtectedRoute><AddConflict userId = {currentUser?.uid} onNewConflictCreation={handleAddingNewConflictToList}/></ProtectedRoute>} />
 
-          <Route path='conflictList' element={<ConflictList conflictList = {mainConflictList} />} />
-          <Route path='addConflict' element={<AddConflict userId = {currentUid} onNewConflictCreation={handleAddingNewConflictToList}/>} />
+            <Route path = 'editNeedsStatement/:conflictId' element = {<ProtectedRoute><EditNeedsStatement conflictList = {mainConflictList} onEditConflict={handleEditingConflictInList} /></ProtectedRoute>} />
+            <Route path = 'editApologyStatement/:conflictId' element = {<ProtectedRoute><EditApologyStatement conflictList = {mainConflictList} onEditConflict={handleEditingConflictInList} /></ProtectedRoute>} />
 
-          <Route path = 'editNeedsStatement/:conflictId' element = {<EditNeedsStatement conflictList = {mainConflictList} onEditConflict={handleEditingConflictInList} />} />
-          <Route path = 'editApologyStatement/:conflictId' element = {<EditApologyStatement conflictList = {mainConflictList} onEditConflict={handleEditingConflictInList} />} />
+            <Route path = ':conflictId' element = {<ProtectedRoute><ConflictDetail conflictList = {mainConflictList} onClickingDelete={handleDeletingConflict}/></ProtectedRoute>} />
+            <Route path = 'edit/:conflictId' element = {<ProtectedRoute><EditConflict conflictList = {mainConflictList} onEditConflict={handleEditingConflictInList}/></ProtectedRoute>} />
 
-          <Route path = ':conflictId' element = {<ConflictDetail conflictList = {mainConflictList} onClickingDelete={handleDeletingConflict}/>} />
-          <Route path = 'edit/:conflictId' element = {<EditConflict conflictList = {mainConflictList} onEditConflict={handleEditingConflictInList}/>} />
+            
+            <Route 
+              path='TEMP' 
+              element={
+              <ProtectedRoute>
+                <TEMP user = {currentUser}/>
+              </ProtectedRoute>
+              }
+            />
+          </Route>
 
-          <Route path='login' element={<Login />} />
-          <Route path='SignUp' element={<SignUp />} />
-          <Route path='*' element={<Error />} />
-        </Route>
-
-      </Routes>
+        </Routes>
     </BrowserRouter>
   );
 }
