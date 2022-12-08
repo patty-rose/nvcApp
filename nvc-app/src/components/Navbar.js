@@ -9,6 +9,8 @@ const Navbar = () => {
       >
         Home
       </NavLink>
+
+      {/* user */}
       <NavLink 
         to='/conflictList'
         className={({ isActive }) => (isActive ? 'link active' : 'link' )}
@@ -21,6 +23,8 @@ const Navbar = () => {
         >
           Add Conflict Event
       </NavLink>
+
+      {/* no user */}
       <NavLink 
         to='/login'
         className={({ isActive }) => (isActive ? 'link active' : 'link' )}

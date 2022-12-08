@@ -16,20 +16,36 @@ import EditApologyStatement from './pages/EditApologyStatement';
 import TEMP from './pages/TEMP.js';
 import { AuthContextProvider, UserAuth } from './context/AuthContext';
 import ProtectedRoute from './pages/ProtectedRoute.js';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 
 function App() {
   //state:
   const [mainConflictList, setMainConflictList] = useState([]);
   const [error, setError] = useState(null);
-  const [currentUid, setCurrentUid] = useState(null);
+  const [currentUser, setCurrentUser] = useState(null);
+
+  console.log("list:", mainConflictList);
+  console.log("user:", currentUser);
+  console.log("user Id:", currentUser?.uid);
+
+  //Auth object & observer:
+  const auth = getAuth();
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      setCurrentUser(user);
+    } else {
+      setCurrentUser(null);
+    }
+  });
   
   //query firestore db for entire 'conflicts' docs:
   useEffect(() => { 
     const conflictsRef = collection(db, "conflicts");
     const queryByUidAndDate = query(
       conflictsRef,
-      where("userId", "==", currentUid)
+      where("userId", "==", currentUser && currentUser.uid)
     );
 
     const unSubscribe = onSnapshot(
@@ -60,7 +76,7 @@ function App() {
     );
 
     return () => unSubscribe();
-  }, [currentUid]);
+  }, [currentUser]);
 
   //CRUD handlers:
   const handleAddingNewConflictToList = async (newConflictData) => {
@@ -78,37 +94,36 @@ function App() {
 
   return(
     <BrowserRouter>
-    {/* potential to wrap App component in index.js with <BroweserRouter> */}
+    {/* potential to wrap App component in index.js with <BrowserRouter> */}
       <AuthContextProvider>
         <Routes>
           <Route path='/' element={<SharedLayout />}>
             <Route index element = {<Home/>} />
+            <Route path='login' element={<Login />} />
+            <Route path='SignUp' element={<SignUp />} />
+            <Route path='*' element={<Error />} />
 
-            <Route path='conflictList' element={<ConflictList conflictList = {mainConflictList} />} />
-            <Route path='addConflict' element={<AddConflict userId = {currentUid} onNewConflictCreation={handleAddingNewConflictToList}/>} />
+            <Route path='conflictList' element={<ProtectedRoute><ConflictList conflictList = {mainConflictList} /></ProtectedRoute>} />
+            <Route path='addConflict' element={<ProtectedRoute><AddConflict userId = {currentUser?.uid} onNewConflictCreation={handleAddingNewConflictToList}/></ProtectedRoute>} />
 
-            <Route path = 'editNeedsStatement/:conflictId' element = {<EditNeedsStatement conflictList = {mainConflictList} onEditConflict={handleEditingConflictInList} />} />
-            <Route path = 'editApologyStatement/:conflictId' element = {<EditApologyStatement conflictList = {mainConflictList} onEditConflict={handleEditingConflictInList} />} />
+            <Route path = 'editNeedsStatement/:conflictId' element = {<ProtectedRoute><EditNeedsStatement conflictList = {mainConflictList} onEditConflict={handleEditingConflictInList} /></ProtectedRoute>} />
+            <Route path = 'editApologyStatement/:conflictId' element = {<ProtectedRoute><EditApologyStatement conflictList = {mainConflictList} onEditConflict={handleEditingConflictInList} /></ProtectedRoute>} />
 
-            <Route path = ':conflictId' element = {<ConflictDetail conflictList = {mainConflictList} onClickingDelete={handleDeletingConflict}/>} />
-            <Route path = 'edit/:conflictId' element = {<EditConflict conflictList = {mainConflictList} onEditConflict={handleEditingConflictInList}/>} />
+            <Route path = ':conflictId' element = {<ProtectedRoute><ConflictDetail conflictList = {mainConflictList} onClickingDelete={handleDeletingConflict}/></ProtectedRoute>} />
+            <Route path = 'edit/:conflictId' element = {<ProtectedRoute><EditConflict conflictList = {mainConflictList} onEditConflict={handleEditingConflictInList}/></ProtectedRoute>} />
 
             
             <Route 
-              path='/TEMP' 
+              path='TEMP' 
               element={
               <ProtectedRoute>
                 <TEMP />
               </ProtectedRoute>
               }
             />
-
-            <Route path='login' element={<Login />} />
-            <Route path='SignUp' element={<SignUp />} />
-            <Route path='*' element={<Error />} />
           </Route>
 
-          </Routes>
+        </Routes>
       </AuthContextProvider>
       
     </BrowserRouter>
