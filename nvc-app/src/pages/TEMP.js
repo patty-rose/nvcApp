@@ -1,21 +1,21 @@
+import { signOut } from 'firebase/auth';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import {UserAuth} from '../context/AuthContext';
+import { auth } from '../firebase';
+import PropTypes from 'prop-types'
 
-const TEMP = () => {
-  const {user, logout} = UserAuth();
+const TEMP = props => {
+  const {user} = props;
   const navigate = useNavigate();
 
-
-
   const handleLogout = async () => {
-    try{
-      await logout();
+    try {
+      await signOut(auth);
       navigate('/');
-    } catch(e){
+    } catch (e) {
       console.log(e.message);
     }
-  }
+  };
   return (
     <div>
       <div className='max-w-[700px] mx-auto my-16 p-4'>
@@ -31,6 +31,10 @@ const TEMP = () => {
       </div>
     </div>
   )
+}
+
+TEMP.propTypes = {
+  user : PropTypes.object
 }
 
 export default TEMP

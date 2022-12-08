@@ -1,34 +1,33 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { UserAuth } from '../context/AuthContext';
+import { auth } from "../firebase.js";
+import { signInWithEmailAndPassword, signOut } from "firebase/auth";
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [signinErrorMessage, setSigninErrorMessage] = useState('');
+  const [signoutErrorMessage, setSignoutErrorMessage] = useState('');
   const navigate = useNavigate();
-  const { signIn, logout, user } = UserAuth();
-  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('')
+    setSigninErrorMessage('');
     try {
-      await signIn(email, password)
+      await signInWithEmailAndPassword(auth, email, password);
       navigate('/conflictList')
     } catch (e) {
-      setError(`There was an error signing in: ${e.message}`);
-      console.log(e.message);
+      setSigninErrorMessage(`There was an error signing in: ${e.message}`);
     }
   };
 
   const handleLogout = async () => {
+    setSignoutErrorMessage('');
     try {
-      await logout();
+      await signOut(auth);
       navigate('/');
-      console.log('You are logged out')
-    } catch (e) {
-      console.log(e.message);
+    } catch (e) {//current error handling does not catch and alert unsuccessful logouts
+      setSignoutErrorMessage(`There was an error signing out: ${e.message}`);
     }
   };
 
@@ -44,7 +43,7 @@ const Login = () => {
             </Link>
           </p>
         </div>
-        <p>{error}</p>
+        <p>{signinErrorMessage}</p>
         <form onSubmit={handleSubmit}>
           <div className='flex flex-col py-2'>
             <label className='py-2 font-medium'>Email Address</label>
@@ -71,6 +70,7 @@ const Login = () => {
           </button>
         </form>
         <div>
+          <p>{signinErrorMessage}</p>
           <button onClick={handleLogout} className='border border-blue-500 bg-blue-600 hover:bg-blue-500 p-1 my-1 text-white'>
             Logout
           </button>

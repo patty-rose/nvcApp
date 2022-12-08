@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import { db } from './firebase.js';
 import { collection, addDoc, onSnapshot, doc, updateDoc, deleteDoc, query, where } from "firebase/firestore";
@@ -14,8 +14,6 @@ import EditConflict from './pages/EditConflict';
 import EditNeedsStatement from './pages/EditNeedsStatement';
 import EditApologyStatement from './pages/EditApologyStatement';
 import TEMP from './pages/TEMP.js';
-import { AuthContextProvider, UserAuth } from './context/AuthContext';
-import ProtectedRoute from './pages/ProtectedRoute.js';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 
@@ -34,11 +32,21 @@ function App() {
 
   onAuthStateChanged(auth, (user) => {
     if (user) {
+      // localStorage.setItem("authUser", JSON.stringify(authUser));
       setCurrentUser(user);
     } else {
       setCurrentUser(null);
+      // localStorage.removeItem("authUser");
     }
-  });
+  });//if using local storage also update useState(JSON.parse(localStorage.getItem("authUser")!))
+
+  //protected route comp:
+  const ProtectedRoute = ({ children }) => {
+    if (!currentUser) {
+      return <Navigate to='/' />;
+    }
+    return children;
+  };
   
   //query firestore db for entire 'conflicts' docs:
   useEffect(() => { 
@@ -95,7 +103,6 @@ function App() {
   return(
     <BrowserRouter>
     {/* potential to wrap App component in index.js with <BrowserRouter> */}
-      <AuthContextProvider>
         <Routes>
           <Route path='/' element={<SharedLayout />}>
             <Route index element = {<Home/>} />
@@ -117,15 +124,13 @@ function App() {
               path='TEMP' 
               element={
               <ProtectedRoute>
-                <TEMP />
+                <TEMP user = {currentUser}/>
               </ProtectedRoute>
               }
             />
           </Route>
 
         </Routes>
-      </AuthContextProvider>
-      
     </BrowserRouter>
   );
 }
