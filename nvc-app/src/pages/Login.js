@@ -1,53 +1,81 @@
-import { auth } from "../firebase.js";
-import { signInWithEmailAndPassword, signOut } from "firebase/auth";
-import React, { useState } from "react";
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { UserAuth } from '../context/AuthContext';
 
 const Login = () => {
-  const [signInSuccess, setSignInSuccess] = useState(null);
-  const [signOutSuccess, setSignOutSuccess] = useState(null);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
+  const { signIn, logout, user } = UserAuth();
+  
 
-  function doSignIn(event) {
-    event.preventDefault();
-    const email = event.target.signinEmail.value;
-    const password = event.target.signinPassword.value;
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        setSignInSuccess(`You've successfully signed in as ${userCredential.user.email}!`)
-      })
-      .catch((error) => {
-        setSignInSuccess(`There was an error signing in: ${error.message}!`)
-      });
-  }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('')
+    try {
+      await signIn(email, password)
+      navigate('/conflictList')
+    } catch (e) {
+      setError(`There was an error signing in: ${e.message}`);
+      console.log(e.message);
+    }
+  };
 
-  function doSignOut() {
-    signOut(auth)
-      .then(function() {
-        setSignOutSuccess("You have successfully signed out!");
-      }).catch(function(error) {
-        setSignOutSuccess(`There was an error signing out: ${error.message}!`);
-      });
-  }
+  const handleLogout = async () => {
+    try {
+      await logout();
+      navigate('/');
+      console.log('You are logged out')
+    } catch (e) {
+      console.log(e.message);
+    }
+  };
 
   return (
     <React.Fragment>
-      <h1>Sign In</h1>
-      {signInSuccess}
-      <form onSubmit={doSignIn}>
-        <input
-          type='text'
-          name='signinEmail'
-          placeholder='email' />
-        <input
-          type='password'
-          name='signinPassword'
-          placeholder='Password' />
-        <button type='submit'>Sign in</button>
-      </form>
-
-      <h1>Sign Out</h1>
-      {signOutSuccess}
-      <br />
-      <button onClick={doSignOut}>Sign out</button>
+      <div className='max-w-[700px] mx-auto my-1 p-4'>
+        <div>
+          <h1 className='text-2xl font-bold py-2'>Sign in to your account</h1>
+          <p className='py-2'>
+            Don't have an account yet?{' '}
+            <Link to='/signUp' className='underline'>
+              Sign up.
+            </Link>
+          </p>
+        </div>
+        <p>{error}</p>
+        <form onSubmit={handleSubmit}>
+          <div className='flex flex-col py-2'>
+            <label className='py-2 font-medium'>Email Address</label>
+              <input
+                onChange={(e) => setEmail(e.target.value)}
+                className='border p-3'
+                type='text'
+                name='signinEmail'
+                placeholder='email' />
+          </div>
+          <div className='flex flex-col py-2'>
+            <label className='py-2 font-medium'>Password</label>
+            <input
+              onChange={(e) => setPassword(e.target.value)}
+              className='border p-3'
+              type='password'
+              name='signinPassword'
+              placeholder='Password' />
+          </div>
+          <button 
+            className='border border-blue-500 bg-blue-600 hover:bg-blue-500 p-1 my-1 text-white'
+            type='submit'>
+              Sign in
+          </button>
+        </form>
+        <div>
+          <button onClick={handleLogout} className='border border-blue-500 bg-blue-600 hover:bg-blue-500 p-1 my-1 text-white'>
+            Logout
+          </button>
+        </div>
+      </div>
     </React.Fragment>
   );
 }

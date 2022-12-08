@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 
-const StyledNavbar = () => {
+const Navbar = () => {
   return (
     <nav className='navbar'>
       <NavLink 
@@ -25,7 +25,7 @@ const StyledNavbar = () => {
         to='/login'
         className={({ isActive }) => (isActive ? 'link active' : 'link' )}
         >
-          Login
+          Login/Logout
       </NavLink>
       <NavLink 
         to='/SignUp'
@@ -37,4 +37,4 @@ const StyledNavbar = () => {
   );
 };
 
-export default StyledNavbar;
+export default Navbar;
