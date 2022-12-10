@@ -18,7 +18,7 @@ const Navbar = () => {
         Conflicts
       </NavLink>
       <NavLink 
-        to='/addConflict'
+        to='/addEvent/addConflict'
         className={({ isActive }) => (isActive ? 'link active' : 'link' )}
         >
           Add Conflict Event

@@ -4,7 +4,7 @@ import { db } from './firebase.js';
 import { collection, addDoc, onSnapshot, doc, updateDoc, deleteDoc, query, where } from "firebase/firestore";
 import Home from './pages/Splash';
 import ConflictList from './pages/ConflictList';
-import AddConflict from './pages/AddConflict';
+import AddConflict from './components/AddConflict';
 import Error from './pages/Error';
 import SharedLayout from './pages/SharedLayout';
 import ConflictDetail from './pages/ConflictDetail';
@@ -15,6 +15,7 @@ import EditNeedsStatement from './pages/EditNeedsStatement';
 import EditApologyStatement from './pages/EditApologyStatement';
 import TEMP from './pages/TEMP.js';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import SharedCreateLayout from './pages/SharedCreateLayout.js';
 
 
 function App() {
@@ -111,7 +112,11 @@ function App() {
             <Route path='*' element={<Error />} />
 
             <Route path='conflictList' element={<ProtectedRoute><ConflictList conflictList = {mainConflictList} /></ProtectedRoute>} />
-            <Route path='addConflict' element={<ProtectedRoute><AddConflict userId = {currentUser?.uid} onNewConflictCreation={handleAddingNewConflictToList}/></ProtectedRoute>} />
+            
+
+            <Route path='addEvent' element={<SharedCreateLayout />}>
+              <Route path='/addEvent/addConflict' element={<ProtectedRoute><AddConflict userId = {currentUser?.uid} onNewConflictCreation={handleAddingNewConflictToList}/></ProtectedRoute>} />
+            </Route>
 
             <Route path = 'editNeedsStatement/:conflictId' element = {<ProtectedRoute><EditNeedsStatement conflictList = {mainConflictList} onEditConflict={handleEditingConflictInList} /></ProtectedRoute>} />
             <Route path = 'editApologyStatement/:conflictId' element = {<ProtectedRoute><EditApologyStatement conflictList = {mainConflictList} onEditConflict={handleEditingConflictInList} /></ProtectedRoute>} />
