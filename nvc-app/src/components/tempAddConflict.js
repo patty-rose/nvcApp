@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 const AddDescription = (props) => {
   const {formData, setFormData} = props;
   return (
-    <div clasName='description-container'>
+    <div className='description-container'>
       <input
           type='text'
           name='title'

@@ -89,8 +89,19 @@ function App() {
 
   //CRUD handlers:
   const handleAddingNewConflictToList = async (newConflictData) => {
-    await addDoc(collection(db, "conflicts"), newConflictData);
+      const docRef = await addDoc(collection(db, "conflicts"), newConflictData);
+      return docRef;
   }
+
+  // const handleAddingNewConflictToList2 = (newConflictData) => {
+  //   addDoc(collection(db, "conflicts"), newConflictData)
+  //     .then(function(docRef) {
+  //       console.log("Document written with ID: ", docRef.id);
+  //     })
+  //     .catch(function(error) {
+  //       console.error("Error adding document: ", error);
+  //   });
+  // }
 
   const handleEditingConflictInList = async (conflictToEdit) => {
     const conflictRef = doc(db, "conflicts", conflictToEdit.id);

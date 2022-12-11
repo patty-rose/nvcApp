@@ -13,7 +13,6 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-    
     try{ 
       await createUserWithEmailAndPassword(auth, email, password);
       navigate('/ConflictList');

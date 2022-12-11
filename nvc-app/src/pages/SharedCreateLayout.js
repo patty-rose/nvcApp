@@ -31,8 +31,8 @@ const SharedCreateLayout = (props) => {
     }
   }
 
-  function handleAddConflictSubmission() {
-    props.onNewConflictCreation({
+  const handleAddConflictSubmission = async () => {
+    const docRef = await props.onNewConflictCreation({
       title: formData.title,
       description: formData.description, 
       feeling: formData.feelings, 
@@ -42,9 +42,9 @@ const SharedCreateLayout = (props) => {
       conflictDate: formData.date,
       userId: props.userId
     });
-
-    navigate(`/conflictList`);
+    navigate(`/${docRef.id}`);
   }
+
   return (
     <>
       <div className="multi-page-form">
