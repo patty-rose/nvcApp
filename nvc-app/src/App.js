@@ -114,7 +114,7 @@ function App() {
             <Route path='conflictList' element={<ProtectedRoute><ConflictList conflictList = {mainConflictList} /></ProtectedRoute>} />
             
 
-            <Route path='addEvent' element={<SharedCreateLayout />}>
+            <Route path='addEvent' element={<SharedCreateLayout userId = {currentUser?.uid} onNewConflictCreation={handleAddingNewConflictToList}/>}>
               <Route path='/addEvent/addConflict' element={<ProtectedRoute><AddConflict userId = {currentUser?.uid} onNewConflictCreation={handleAddingNewConflictToList}/></ProtectedRoute>} />
             </Route>
 
