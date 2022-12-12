@@ -18,7 +18,7 @@ const Navbar = () => {
         Conflicts
       </NavLink>
       <NavLink 
-        to='/addEvent/addConflict'
+        to='/addEvent'
         className={({ isActive }) => (isActive ? 'link active' : 'link' )}
         >
           Add Conflict Event
@@ -26,13 +26,13 @@ const Navbar = () => {
 
       {/* no user */}
       <NavLink 
-        to='/login'
+        to='/signIn'
         className={({ isActive }) => (isActive ? 'link active' : 'link' )}
         >
-          Login/Logout
+          Sign in/Logout
       </NavLink>
       <NavLink 
-        to='/SignUp'
+        to='/signUp'
         className={({ isActive }) => (isActive ? 'link active' : 'link' )}
         >
           Create an account

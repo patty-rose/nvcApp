@@ -4,11 +4,11 @@ import { db } from './firebase.js';
 import { collection, addDoc, onSnapshot, doc, updateDoc, deleteDoc, query, where } from "firebase/firestore";
 import Home from './pages/Splash';
 import ConflictList from './pages/ConflictList';
-import AddConflict from './components/AddConflict';
+// import AddConflict from './components/AddConflict';
 import Error from './pages/Error';
 import SharedLayout from './pages/SharedLayout';
 import ConflictDetail from './pages/ConflictDetail';
-import Login from './pages/Login';
+import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import EditConflict from './pages/EditConflict';
 import EditNeedsStatement from './pages/EditNeedsStatement';
@@ -118,15 +118,15 @@ function App() {
         <Routes>
           <Route path='/' element={<SharedLayout />}>
             <Route index element = {<Home/>} />
-            <Route path='login' element={<Login />} />
-            <Route path='SignUp' element={<SignUp />} />
+            <Route path='signIn' element={<SignIn />} />
+            <Route path='signUp' element={<SignUp />} />
             <Route path='*' element={<Error />} />
 
             <Route path='conflictList' element={<ProtectedRoute><ConflictList conflictList = {mainConflictList} /></ProtectedRoute>} />
             
 
-            <Route path='addEvent' element={<SharedCreateLayout userId = {currentUser?.uid} onNewConflictCreation={handleAddingNewConflictToList}/>}>
-              <Route path='/addEvent/addConflict' element={<ProtectedRoute><AddConflict userId = {currentUser?.uid} onNewConflictCreation={handleAddingNewConflictToList}/></ProtectedRoute>} />
+            <Route path='addEvent' element={<ProtectedRoute><SharedCreateLayout userId = {currentUser?.uid} onNewConflictCreation={handleAddingNewConflictToList}/></ProtectedRoute>}>
+              {/* <Route path='/addEvent/addConflict' element={<ProtectedRoute><AddConflict userId = {currentUser?.uid} onNewConflictCreation={handleAddingNewConflictToList}/></ProtectedRoute>} /> */}
             </Route>
 
             <Route path = 'editNeedsStatement/:conflictId' element = {<ProtectedRoute><EditNeedsStatement conflictList = {mainConflictList} onEditConflict={handleEditingConflictInList} /></ProtectedRoute>} />

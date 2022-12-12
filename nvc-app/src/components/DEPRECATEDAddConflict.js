@@ -45,8 +45,7 @@ function AddConflict(props) {
         <textarea
           name='need'
           placeholder='What do you need in the future?' />
-        <button
-        type='submit'>Submit</button>
+        <button className='btn' type='submit'>Submit</button>
       </form>
     </React.Fragment>
   );

@@ -22,7 +22,7 @@ const TEMP = props => {
         <div>
           <h1 className='text-2xl font-bold py-2'>USER EMAIL: {user && user.email}</h1>
           <button 
-            className = 'border px-6 py-2 my-4'
+            className='btn'
             onClick={handleLogout}
             >
               Logout

@@ -17,7 +17,7 @@ function ReusableForm(props) {
           name='need'
           placeholder='What do you need in the future?' />
         <button
-        type='submit'>{props.buttonText}</button>
+        className='btn' type='submit'>{props.buttonText}</button>
       </form>
     </React.Fragment>
   );
