@@ -2,6 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+/* PROGRESS BAR */
+.progressbar {
+  width: 400px;
+  height: 10px;
+  background-color: #a29dff;
+  margin-bottom: 50px;
+}
+
+.progressbar div {
+  width: 33.3%;
+  height: 100%;
+  background-color: #334155;
+}
+
 *,
 ::after,
 ::before {

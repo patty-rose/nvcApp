@@ -29,18 +29,18 @@ const SignUp = () => {
         <label className='py-2 font-medium'>Email Address</label>
         <input
           onChange={(e) => setEmail(e.target.value)}
-          className='border p-3'
+          className='form-input'
           type='text'
           name='email'
           placeholder='email' />
         <label className='py-2 font-medium'>Password</label>
         <input
           onChange={(e) => setPassword(e.target.value)}
-          className='border p-3'
+          className='form-input'
           type='password'
           name='password'
           placeholder='Password' />
-        <button type='submit'>Sign up</button>
+        <button className='btn' type='submit'>Sign up</button>
       </form>
     </React.Fragment>
   );

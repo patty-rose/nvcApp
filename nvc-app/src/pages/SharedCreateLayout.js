@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
-import AddConflict from '../components/AddConflict';
+// import AddConflict from '../components/AddConflict';
 import AddFeelings from '../components/AddFeelings';
 import AddNeeds from '../components/AddNeeds';
-import AddDescription from '../components/tempAddConflict';
+import AddDescription from '../components/AddDescription';
 import PropTypes from 'prop-types';
 
 
@@ -52,7 +52,7 @@ const SharedCreateLayout = (props) => {
         <div className="progressbar">
           <div
           style={{ width: page === 0 ? "33.3%" : page === 1 ? "66.6%" : "100%" }}
-          >progress bar</div>
+          ></div>
       </div>
         <div className="header">
           <h1>{formTitles[page]}</h1>
@@ -60,12 +60,14 @@ const SharedCreateLayout = (props) => {
         <div className='body'>{pageDisplay()}</div>
         <div className='footer'>
           <button
+          className='btn'
           disabled = {page === 0}
           onClick={() => {setPage((currPage) => currPage - 1)}}
           >
             Prev
           </button>
           <button
+            className='btn'
             onClick={() => {
               if (page === formTitles.length - 1) {
                 alert("FORM SUBMITTED");

@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { auth } from "../firebase.js";
 import { signInWithEmailAndPassword, signOut } from "firebase/auth";
 
-const Login = () => {
+const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [signinErrorMessage, setSigninErrorMessage] = useState('');
@@ -64,14 +64,14 @@ const Login = () => {
               placeholder='Password' />
           </div>
           <button 
-            className='border border-blue-500 bg-blue-600 hover:bg-blue-500 p-1 my-1 text-white'
+            className='btn'
             type='submit'>
               Sign in
           </button>
         </form>
         <div>
           <p>{signinErrorMessage}</p>
-          <button onClick={handleLogout} className='border border-blue-500 bg-blue-600 hover:bg-blue-500 p-1 my-1 text-white'>
+          <button onClick={handleLogout} className='btn'>
             Logout
           </button>
         </div>
@@ -80,4 +80,4 @@ const Login = () => {
   );
 }
 
-export default Login
+export default SignIn

@@ -39,7 +39,7 @@ function EditApologyStatement (props) {
             />
         </label>
         <button
-        type='submit'>submit edits</button>
+        className='btn' type='submit'>submit edits</button>
       </form>
     </React.Fragment>
   );
