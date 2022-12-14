@@ -4,9 +4,6 @@ import VoiceToText from './VoiceToText';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 
 const AddDescription = (props) => {
-  const [inputValue, setInputValue] = useState('');
-  const [text, setText] = useState('');
-
 
   const {formData, setFormData} = props;
 
@@ -18,11 +15,6 @@ const AddDescription = (props) => {
     resetTranscript,
     browserSupportsSpeechRecognition
   } = useSpeechRecognition();
-
-  useEffect(() => {
-    setText(transcript);
-  }, [transcript]);
-  
 
   if (!browserSupportsSpeechRecognition) {
     return <span>Browser doesn't support speech recognition.</span>;
@@ -42,10 +34,12 @@ const AddDescription = (props) => {
     resetTranscript();
   }
 
-  const handleThisClick = () => {
-    const manager = SpeechRecognition.getRecognitionManager();
-    // manager.updateTranscript({results : "hi", resultIndex : 0})
-    console.log(manager);
+  const handleDescriptionInputChange = (e) => {
+      if(listening){
+        handleStopMicrophone();
+      }
+      setFormData({ ...formData, description: e.target.value 
+      });
   }
 
   return (
@@ -79,28 +73,17 @@ const AddDescription = (props) => {
             <button className='btn' onClick={() => {handleStopMicrophone()}}>Stop</button>
             Microphone: {listening ? 'on' : 'off'}
           </p>
-          <p>TRANSCRIPT: {transcript}</p>
-          <p>FINALTRANSCRIPT:{finalTranscript}</p>
-          <p>TEXT: {text}</p>
         </div>
-        {/* BUG: onChange triggers defaultValue to stop updating when listening is true */}
-        <button className='btn' onClick={() => {handleThisClick()}}>
-              manager
-            </button>
         <textarea
           className='form-textarea'
           name='description'
           placeholder='Describe what happened' 
-          value={ listening ? formData.description.concat(text) : formData.description }
-          // defaultValue = {inputValue}
-          onChange={(e) => {
-            setFormData({ ...formData, description: e.target.value 
-            });
-            //update text field with current transcript TEXT
-            //set the form data to the text field
-            //reset transcript
-            //start listening
-          }}
+          value={ listening ? formData.description.concat(' ' + transcript) : formData.description }
+          // onChange={(e) => {
+          //   setFormData({ ...formData, description: e.target.value 
+          //   });
+          // }}
+          onChange={handleDescriptionInputChange}
           />
     </div>
   )

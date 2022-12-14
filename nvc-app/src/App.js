@@ -15,7 +15,7 @@ import EditNeedsStatement from './pages/EditNeedsStatement';
 import EditApologyStatement from './pages/EditApologyStatement';
 import TEMP from './pages/TEMP.js';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import SharedCreateLayout from './pages/SharedCreateLayout.js';
+import AddConflictForm from './pages/AddConflictForm.js';
 
 
 function App() {
@@ -125,7 +125,7 @@ function App() {
             <Route path='conflictList' element={<ProtectedRoute><ConflictList conflictList = {mainConflictList} /></ProtectedRoute>} />
             
 
-            <Route path='addEvent' element={<ProtectedRoute><SharedCreateLayout userId = {currentUser?.uid} onNewConflictCreation={handleAddingNewConflictToList}/></ProtectedRoute>}>
+            <Route path='addEvent' element={<ProtectedRoute><AddConflictForm userId = {currentUser?.uid} onNewConflictCreation={handleAddingNewConflictToList}/></ProtectedRoute>}>
               {/* <Route path='/addEvent/addConflict' element={<ProtectedRoute><AddConflict userId = {currentUser?.uid} onNewConflictCreation={handleAddingNewConflictToList}/></ProtectedRoute>} /> */}
             </Route>
 

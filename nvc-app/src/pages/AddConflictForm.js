@@ -7,7 +7,7 @@ import AddDescription from '../components/AddDescription';
 import PropTypes from 'prop-types';
 
 
-const SharedCreateLayout = (props) => {
+const AddConflictForm = (props) => {
   const {onNewConflictCreation, userId} = props;
   const [page, setPage] = useState(0);
   const [formData, setFormData] = useState({
@@ -86,9 +86,9 @@ const SharedCreateLayout = (props) => {
   );
 };
 
-SharedCreateLayout.propTypes = {
+AddConflictForm.propTypes = {
   onNewConflictCreation: PropTypes.func,
   userId: PropTypes.string
 };
 
-export default SharedCreateLayout;
+export default AddConflictForm;
