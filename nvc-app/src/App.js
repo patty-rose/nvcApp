@@ -23,7 +23,6 @@ function App() {
   const [mainConflictList, setMainConflictList] = useState([]);
   const [error, setError] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
-  console.log(currentUser);
 
   //Auth object & observer:
   const auth = getAuth();
@@ -76,13 +75,17 @@ function App() {
         });
         setMainConflictList(conflictsByDate);
       }, 
-      (error) => {
-        setError(error.message);
+      (e) => {
+        setError(e.message);
       }
     );
 
     return () => unSubscribe();
   }, [currentUser]);
+
+  useEffect(() => { 
+    console.log(error);
+  }, [error]);
 
   //CRUD handlers:
   const handleAddingNewConflictToList = async (newConflictData) => {
