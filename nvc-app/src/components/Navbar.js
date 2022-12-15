@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import {Grid, AppBar, Toolbar, Typography} from '@mui/material';
 import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
 import Tabs from '@mui/material/Tabs';
@@ -20,13 +20,12 @@ const Navbar = () => {
           </Grid>
           <Grid item xs={8}>
             <Tabs indicatorColor ="secondary" textColor="inherit" value={tabValue} onChange={(e, val) => setTabValue(val)}>
-            <NavLink 
-              to='/conflictList'>
-              <Tab label='Conflicts' />
-            </NavLink>
-              
-              <Tab label='Add Conflict' />
-              <Tab label='Login' />
+              <Link to={`/conflictList`}>
+              <Tab label='Conflicts' /></Link>
+              <Link to={`/addEvent`}>
+              <Tab label='Add Conflict' /></Link>
+              <Link to={`/signIn`}>
+              <Tab label='Sign In' /></Link>
             </Tabs>
           </Grid>
         </Grid>

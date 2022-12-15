@@ -6,8 +6,6 @@ import Typography from '@mui/material/Typography';
 const Splash = () => {
   return (
     <Container>
-      <Button color='primary' variant='contained'>button</Button>
-      <Button color='secondary' variant='contained'>button</Button>
       <Typography variant='h2'>Welcome to Venter</Typography>
       <Typography variant='body'>Venter helps you manage conflicts by guiding you through describing what happened and how you felt, identifying any unment needs you may have, and drafting statements you can say to those you are in conflict with.
       </Typography>

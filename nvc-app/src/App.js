@@ -47,6 +47,7 @@ function App() {
   
   //query firestore db for 'conflicts' docs:
   useEffect(() => { 
+    console.log(currentUser);
     const conflictsRef = collection(db, "conflicts");
     const queryByUidAndDate = query(
       conflictsRef,
@@ -112,7 +113,7 @@ function App() {
     <BrowserRouter>
     {/* potential to wrap App component in index.js with <BrowserRouter> */}
         <Routes>
-          <Route path='/' element={<SharedLayout />}>
+          <Route path='/' element={<SharedLayout user = {currentUser} />}>
             <Route index element = {<Home/>} />
             <Route path='signIn' element={<SignIn />} />
             <Route path='signUp' element={<SignUp />} />
