@@ -1,5 +1,7 @@
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
+import regeneratorRuntime from "regenerator-runtime";
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+
 
 const AddDescription = (props) => {
 
@@ -11,6 +13,8 @@ const AddDescription = (props) => {
     resetTranscript,
     browserSupportsSpeechRecognition
   } = useSpeechRecognition();
+
+
 
   if (!browserSupportsSpeechRecognition) {
     return <span>Browser doesn't support speech recognition.</span>;
