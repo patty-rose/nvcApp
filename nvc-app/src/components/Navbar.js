@@ -1,6 +1,10 @@
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
-const Navbar = () => {
+const Navbar = props => {
+  const {currentUser} = props;
+
   return (
     <nav className='navbar'>
       <NavLink 
@@ -12,17 +16,17 @@ const Navbar = () => {
 
       {/* user */}
       <NavLink 
-        to='/conflictList'
+        to={currentUser ? '/conflictList' : '/signIn'}
         className={({ isActive }) => (isActive ? 'link active' : 'link' )}
       >
         Conflicts
       </NavLink>
       <NavLink 
-        to='/addEvent'
+        to={currentUser ? '/addEvent' : '/signIn'}
         className={({ isActive }) => (isActive ? 'link active' : 'link' )}
         >
           Add Conflict Event
-      </NavLink>
+      </NavLink>`
 
       {/* no user */}
       <NavLink 
@@ -40,5 +44,9 @@ const Navbar = () => {
     </nav>
   );
 };
+
+Navbar.propTypes = {
+  currentUser : PropTypes.object
+}
 
 export default Navbar;

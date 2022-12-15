@@ -2,7 +2,7 @@ import { signOut } from 'firebase/auth';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../firebase';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 
 const TEMP = props => {
   const {user} = props;

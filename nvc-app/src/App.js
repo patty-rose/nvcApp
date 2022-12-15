@@ -23,6 +23,7 @@ function App() {
   const [mainConflictList, setMainConflictList] = useState([]);
   const [error, setError] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
+  console.log(currentUser);
 
   //Auth object & observer:
   const auth = getAuth();
@@ -112,7 +113,7 @@ function App() {
     <BrowserRouter>
     {/* potential to wrap App component in index.js with <BrowserRouter> */}
         <Routes>
-          <Route path='/' element={<SharedLayout />}>
+          <Route path='/' element={<SharedLayout user={currentUser}/>}>
             <Route index element = {<Home/>} />
             <Route path='signIn' element={<SignIn />} />
             <Route path='signUp' element={<SignUp />} />
