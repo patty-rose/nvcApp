@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-import VoiceToText from './VoiceToText';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 
 const AddDescription = (props) => {
@@ -9,9 +7,7 @@ const AddDescription = (props) => {
 
   const {
     transcript,
-    finalTranscript,
     listening,
-    interimTranscript,
     resetTranscript,
     browserSupportsSpeechRecognition
   } = useSpeechRecognition();
