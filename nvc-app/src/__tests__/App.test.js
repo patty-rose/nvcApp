@@ -8,3 +8,7 @@ it('renders without crashing', () => {
   const root = createRoot(div);
   root.render(<App tab="home" />);
 });
+
+//create mock of data
+//load app
+//trigger data app
