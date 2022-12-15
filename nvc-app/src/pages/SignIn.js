@@ -71,6 +71,7 @@ const SignIn = () => {
         </form>
         <div>
           <p>{signinErrorMessage}</p>
+          <p>{signoutErrorMessage}</p>
           <button onClick={handleLogout} className='btn'>
             Logout
           </button>

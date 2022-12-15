@@ -24,10 +24,6 @@ function App() {
   const [error, setError] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
 
-  console.log("list:", mainConflictList);
-  console.log("user:", currentUser);
-  console.log("user Id:", currentUser?.uid);
-
   //Auth object & observer:
   const auth = getAuth();
 

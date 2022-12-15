@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 // import AddConflict from '../components/AddConflict';
 import AddFeelings from '../components/AddFeelings';
 import AddNeeds from '../components/AddNeeds';
@@ -8,7 +8,6 @@ import PropTypes from 'prop-types';
 
 
 const AddConflictForm = (props) => {
-  const {onNewConflictCreation, userId} = props;
   const [page, setPage] = useState(0);
   const [formData, setFormData] = useState({
     title: "",
