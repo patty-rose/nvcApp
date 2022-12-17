@@ -80,4 +80,8 @@ const Navbar = () => {
   );
 };
 
+Navbar.propTypes = {
+  currentUser : PropTypes.object
+}
+
 export default Navbar;

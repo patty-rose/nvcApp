@@ -75,13 +75,17 @@ function App() {
         });
         setMainConflictList(conflictsByDate);
       }, 
-      (error) => {
-        setError(error.message);
+      (e) => {
+        setError(e.message);
       }
     );
 
     return () => unSubscribe();
   }, [currentUser]);
+
+  useEffect(() => { 
+    console.log(error);
+  }, [error]);
 
   //CRUD handlers:
   const handleAddingNewConflictToList = async (newConflictData) => {
@@ -112,7 +116,7 @@ function App() {
     <BrowserRouter>
     {/* potential to wrap App component in index.js with <BrowserRouter> */}
         <Routes>
-          <Route path='/' element={<SharedLayout user = {currentUser} />}>
+          <Route path='/' element={<SharedLayout user={currentUser}/>}>
             <Route index element = {<Home/>} />
             <Route path='signIn' element={<SignIn />} />
             <Route path='signUp' element={<SignUp />} />

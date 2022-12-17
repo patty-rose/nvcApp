@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react'
-import PropTypes from 'prop-types'
-import VoiceToText from './VoiceToText';
+import PropTypes from 'prop-types';
+import regeneratorRuntime from "regenerator-runtime";
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+
 
 const AddDescription = (props) => {
 
@@ -9,12 +9,14 @@ const AddDescription = (props) => {
 
   const {
     transcript,
-    finalTranscript,
     listening,
-    interimTranscript,
     resetTranscript,
     browserSupportsSpeechRecognition
   } = useSpeechRecognition();
+
+  if (!browserSupportsSpeechRecognition) {
+    return <span>Browser doesn't support speech recognition.</span>;
+  }
 
   const handleStartMicrophone = async () => {
     resetTranscript();
