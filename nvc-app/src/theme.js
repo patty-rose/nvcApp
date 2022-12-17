@@ -94,6 +94,7 @@ const theme = {
       fontSize: 14,
     },
   },
+  shadows: Array(25).fill('none')
 };
 
 export default theme;

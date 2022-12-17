@@ -18,7 +18,7 @@ import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
 
 
 
-const authenticatedPages = [['View Conflict Events', 'conflictList'], ['Add Conflict Event', '/addEvent']];
+const authenticatedPages = [['conflicts', 'conflictList'], ['create conflict', '/addEvent']];
 const authenticatedAccountButtons = [['Log Out', '/signIn', '() => {handleLogout}']];
 const anonAccountButtons = [['Log In', '/signIn'], ['Join', '/signUp']];
 
@@ -57,7 +57,7 @@ const Appbar = props => {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" elevation={0}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
 
@@ -82,8 +82,9 @@ const Appbar = props => {
           </Typography>
 
           {/* DROP DOWN ICON AND TABS - SMALL WIDTH LEFT ALIGNED*/}
+          {/* NEED TO HIDE DROP DOWN MENU WHEN AUTHENTICATED AND MED SCREEN WIDTH */}
           <Box sx={{ 
-            flexGrow: 1, 
+            flexGrow: 0, 
             display: currentUser ? `xs: 'flex', md: 'none'` : `none`
              }}>
             <IconButton
@@ -93,7 +94,7 @@ const Appbar = props => {
               aria-haspopup="true"
               onClick={handleOpenNavMenu}
               color="inherit"
-              display= {currentUser ? `xs: 'flex', md: 'none'` : `none`}
+              display= {`xs: 'flex', md: 'none'`}
             >
               <MenuIcon />
             </IconButton>
