@@ -1,34 +1,83 @@
-import React, { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
+import {Grid, AppBar, Toolbar, Typography} from '@mui/material';
+import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 
-const Navbar = props => {
-  const {currentUser} = props;
-  const [navbarLinks, setNavbarLinks] = useState([]);
-
-  const authenticatedLinks = [['Home', '/'], ['Conflicts', '/conflictList'], ['Add Conflict Event', '/addEvent'], ['Sign In / Sign Out', '/signIn'], ['Sign Up', '/signUp']];
-  const anonymousLinks = [['Home', '/'], ['Sign In / Sign Out', '/signIn'], ['Sign Up', '/signUp']];
-
-  useEffect(() => {
-    if(currentUser){
-      setNavbarLinks(authenticatedLinks);
-    } else {
-      setNavbarLinks(anonymousLinks);
-    }
-  }, [currentUser]);
+const Navbar = () => {
+  const [tabValue, setTabValue] = useState(0);
 
   return (
-    <nav className='navbar'>
-      {navbarLinks.map((navbarLink) => (
+    <>
+    <AppBar>
+      <Toolbar>
+        <Grid container>
+          <Grid item xs={2}>
+            <Typography>
+              <QuestionAnswerIcon />
+            </Typography>
+          </Grid>
+          <Grid item xs={8}>
+            <Tabs indicatorColor ="secondary" textColor="inherit" value={tabValue} onChange={(e, val) => setTabValue(val)}>
+              <Link to={`/conflictList`}>
+              <Tab label='Conflicts' /></Link>
+              <Link to={`/addEvent`}>
+              <Tab label='Add Conflict' /></Link>
+              <Link to={`/signIn`}>
+              <Tab label='Sign In' /></Link>
+            </Tabs>
+          </Grid>
+        </Grid>
+      </Toolbar>
+    </AppBar>
+
+
+
+      <nav className='navbar'>
         <NavLink 
-        key={navbarLink[0]}
-        to={navbarLink[1]}
-        className={({ isActive }) => (isActive ? 'link active' : 'link' )}
+          to='/' 
+          className={({ isActive }) => (isActive ? 'link active' : 'link' )}
         >
-          {navbarLink[0]}
+          Home
         </NavLink>
-      ))}
-    </nav>
+
+        {/* user */}
+        <NavLink 
+          to='/conflictList'
+          className={({ isActive }) => (isActive ? 'link active' : 'link' )}
+        >
+          Conflicts
+        </NavLink>
+        <NavLink 
+          to='/addEvent'
+          className={({ isActive }) => (isActive ? 'link active' : 'link' )}
+          >
+            Add Conflict Event
+        </NavLink>
+
+        <NavLink 
+          to='/account'
+          className={({ isActive }) => (isActive ? 'link active' : 'link' )}
+          >
+            ACCOUNT
+        </NavLink>
+
+        <NavLink 
+          to='/signIn'
+          className={({ isActive }) => (isActive ? 'link active' : 'link' )}
+          >
+            Sign in/Logout
+        </NavLink>
+        <NavLink 
+          to='/signUp'
+          className={({ isActive }) => (isActive ? 'link active' : 'link' )}
+          >
+            Create an account
+        </NavLink>
+      </nav>
+    </>
   );
 };
 

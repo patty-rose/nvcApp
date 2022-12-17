@@ -6,7 +6,7 @@ import Home from './pages/Splash';
 import ConflictList from './pages/ConflictList';
 // import AddConflict from './components/AddConflict';
 import Error from './pages/Error';
-import SharedLayout from './pages/SharedLayout';
+import SharedLayout from './components/SharedLayout';
 import ConflictDetail from './pages/ConflictDetail';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
@@ -45,7 +45,7 @@ function App() {
     return children;
   };
   
-  //query firestore db for entire 'conflicts' docs:
+  //query firestore db for 'conflicts' docs:
   useEffect(() => { 
     const conflictsRef = collection(db, "conflicts");
     const queryByUidAndDate = query(
@@ -122,6 +122,8 @@ function App() {
             <Route path='signUp' element={<SignUp />} />
             <Route path='*' element={<Error />} />
 
+            <Route path='account' element={<ProtectedRoute><TEMP user = {currentUser}/></ProtectedRoute>} />
+
             <Route path='conflictList' element={<ProtectedRoute><ConflictList conflictList = {mainConflictList} /></ProtectedRoute>} />
             
 
@@ -136,14 +138,7 @@ function App() {
             <Route path = 'edit/:conflictId' element = {<ProtectedRoute><EditConflict conflictList = {mainConflictList} onEditConflict={handleEditingConflictInList}/></ProtectedRoute>} />
 
             
-            <Route 
-              path='TEMP' 
-              element={
-              <ProtectedRoute>
-                <TEMP user = {currentUser}/>
-              </ProtectedRoute>
-              }
-            />
+            
           </Route>
 
         </Routes>

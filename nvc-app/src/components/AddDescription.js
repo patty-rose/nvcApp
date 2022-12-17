@@ -14,8 +14,6 @@ const AddDescription = (props) => {
     browserSupportsSpeechRecognition
   } = useSpeechRecognition();
 
-
-
   if (!browserSupportsSpeechRecognition) {
     return <span>Browser doesn't support speech recognition.</span>;
   }
@@ -42,6 +40,10 @@ const AddDescription = (props) => {
       });
   }
 
+  if (!browserSupportsSpeechRecognition) {//REFACTOR THIS ERROR HANDLING
+    return <span>Browser doesn't support speech recognition.</span>;
+  }
+  
   return (
     <div className='description-container'>
       <input
