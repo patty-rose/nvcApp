@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import { auth } from "../firebase.js";
+import { getAuth, signOut } from "firebase/auth";
+
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -14,29 +18,31 @@ import MenuItem from '@mui/material/MenuItem';
 import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
-import { Link, useNavigate } from 'react-router-dom';
-import { auth } from "../firebase.js";
-import { getAuth, signOut } from "firebase/auth";
 
-// const pages = ['Home', 'View Conflict Events', 'Add Conflict Event'];
-const accountLinks = ['Account', 'Sign Out'];
+
+const authenticatedPages = [['View Conflict Events', 'conflictList'], ['Add Conflict Event', '/addEvent']];
+const anonymousPages = [];
+const authenticatedAccountButtons = [['Log Out', '/signIn', '() => {handleLogout}']];
+const anonAccountButtons = [['Log In', '/signIn'], ['Join', '/signUp']];
 
 const Appbar = props => {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [pages, setPages] = useState([]);
-  const navigate = useNavigate();
-  const {user} = props;
+  const [accountButtons, setAccountButtons] = useState([])
+  const {currentUser} = props;
 
 
   useEffect(() => {
-    console.log(user);
-    if(user){
-      setPages(['View Conflict Events', 'Add Conflict Event']);
+    console.log(currentUser);
+    if(currentUser){
+      setPages(authenticatedPages);
+      setAccountButtons(authenticatedAccountButtons);
     } else {
       setPages([]);
+      setAccountButtons(anonAccountButtons);
     }
-  }, [user]);
+  }, [currentUser]);
 
 
   const handleOpenNavMenu = (event) => {
@@ -66,6 +72,8 @@ const Appbar = props => {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
+
+          {/* LOGO AND NAME -- WIDE SCREEN LEFT ALLIGHNED */}
           <QuestionAnswerIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           <Typography
             variant="h6"
@@ -75,9 +83,9 @@ const Appbar = props => {
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
+              // fontFamily: 'monospace',
               fontWeight: 700,
-              letterSpacing: '.3rem',
+              letterSpacing: '0rem',
               color: 'inherit',
               textDecoration: 'none',
             }}
@@ -85,14 +93,19 @@ const Appbar = props => {
             Venter
           </Typography>
 
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+          {/* DROP DOWN ICON AND TABS - SMALL WIDTH LEFT ALIGNED*/}
+          <Box sx={{ 
+            flexGrow: 1, 
+            display: currentUser ? `xs: 'flex', md: 'none'` : `none`
+             }}>
             <IconButton
               size="large"
-              aria-label="account of current user"
+              aria-label="account"
               aria-controls="menu-appbar"
               aria-haspopup="true"
               onClick={handleOpenNavMenu}
               color="inherit"
+              display= {currentUser ? `xs: 'flex', md: 'none'` : `none`}
             >
               <MenuIcon />
             </IconButton>
@@ -111,23 +124,30 @@ const Appbar = props => {
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
               sx={{
-                display: { xs: 'block', md: 'none' },
+                display: currentUser ? `xs: 'flex', md: 'none'` : `none`
               }}
             >
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
                   <Typography textAlign="center">
-                    <Link style={{ textDecoration: 'none', color:'#1c2020'}} to= {page === 'View Conflict Events' ? `/conflictList` : page === 'Add Conflict Event' ? `/addEvent` : page === 'Home' ? `/` : `/error`} >
-                      {page}
+                    <Link 
+                    style={{ 
+                      textDecoration: 'none', 
+                      color:'#1c2020'}} 
+                      to={page[1]} >
+                      {page[0]}
                     </Link>
                   </Typography>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
+
+          {/* LOGO AND TITLE -- SMALL WIDTH CENTER ALIGNED */}
           <QuestionAnswerIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
           <Typography
             variant="h5"
+            href="/"
             noWrap
             component="a"
             sx={{
@@ -135,30 +155,74 @@ const Appbar = props => {
               display: { xs: 'flex', md: 'none' },
               flexGrow: 1,
               fontWeight: 700,
-              letterSpacing: '.3rem',
+              letterSpacing: '0rem',
               color: 'inherit',
               textDecoration: 'none',
             }}
           >
             Venter
           </Typography>
+
+            {/* NAVBAR TABS -- WIDE VIEW CENTER ALIGNED */}
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
+                sx={{ my: 1, color: 'white', display: 'block' }}
               >
-                <Link style={{ textDecoration: 'none', color:'#1c2020'}} to={page === 'View Conflict Events' ? `/conflictList` : page === 'Add Conflict Event' ? `/addEvent` : page === 'Home' ? `/` : `*`}>
-                  {page}
+                <Link 
+                  style={{ 
+                    textDecoration: 'none', 
+                    color:'#1c2020'}} 
+                  to={page[1]} >
+                    {page[0]}
                 </Link>
               </Button>
             ))}
           </Box>
 
-          {/* ACCOUNT AVATAR: */}
+          {/* ACCOUNT MENU-- RIGHT ALIGNED: */}
           <Box sx={{ flexGrow: 0 }}>
-            <Typography>Hello</Typography>
+            {accountButtons.map((accountButton) => (
+              <Button
+                key={accountButton}
+                sx={{ my: 1, color: 'white' }}
+                onClick={handleLogout}
+              >
+                <Link 
+                  style={{ 
+                    textDecoration: 'none', 
+                    color:'#1c2020'}} 
+                  to={accountButton[1]} >
+                    {accountButton[0]}
+                </Link>
+              </Button>
+            )
+            )}
+            {/* <Button
+                sx={{ my: 0, color: 'white'}}
+              >
+                <Link 
+                    style={{ 
+                      textDecoration: 'none', 
+                      color:'#1c2020'}} 
+                      to='/signIn' >
+                      Log in
+                    </Link>
+              </Button>
+              <Button
+                sx={{ my: 0, color: 'white'}}
+              >
+                <Link 
+                    style={{ 
+                      textDecoration: 'none', 
+                      color:'#1c2020'}} 
+                      to='/signUp' >
+                      Join
+                    </Link>
+              </Button> */}
+            {/* <Typography>Hello {currentUser?.email}</Typography>
             <Tooltip title="account">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <AccountCircleIcon style={{color:'#1c2020'}}/>
@@ -180,17 +244,21 @@ const Appbar = props => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {accountLinks.map((accountLink) => (
-                <MenuItem key={accountLink} onClick={handleCloseUserMenu}>
+              {accountTabs.map((accountTab) => (
+                <MenuItem key={accountTab} onClick={handleCloseUserMenu}>
                   <Typography textAlign="center">
-                    <Link style={{ textDecoration: 'none', color:'#1c2020'}} to= {accountLink === 'Account' ? `/signIn` :  `/`} onClick = {accountLink === 'Sign Out' ? ()=>handleLogout() : null}>
-                      {accountLink}
+                    <Link 
+                    style={{ textDecoration: 'none', color:'#1c2020'}} 
+                    to= {accountTab[1]} 
+                    onClick = {accountTab[2]}>
+                      {accountTab[0]}
                     </Link>
                     </Typography>
                 </MenuItem>
               ))}
-            </Menu>
+            </Menu> */}
           </Box>
+          
         </Toolbar>
       </Container>
     </AppBar>
@@ -198,7 +266,7 @@ const Appbar = props => {
 }
 
 Appbar.propTypes = {
-  user : PropTypes.object
+  currentUser : PropTypes.object
 }
 
 export default Appbar;
