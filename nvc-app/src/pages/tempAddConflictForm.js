@@ -5,11 +5,16 @@ import AddFeelings from '../components/AddFeelings';
 import AddNeeds from '../components/AddNeeds';
 import AddDescription from '../components/AddDescription';
 import PropTypes from 'prop-types';
-import Stepper from '../components/Stepper.js';
+import Stepper from '@mui/material/Stepper';
+import Box from '@mui/material/Box';
+import Step from '@mui/material/Step';
+import StepLabel from '@mui/material/StepLabel';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
 
 
 const AddConflictForm = (props) => {
-  const [page, setPage] = useState(0);
+  const [activePage, setActivePage] = useState(0);
   const [formData, setFormData] = useState({
     title: "",
     date: null,
@@ -21,10 +26,10 @@ const AddConflictForm = (props) => {
 
   const formTitles = ["conflict description", "how did you feel?", "what did you need"];
 
-  const pageDisplay = () => {
-    if (page === 0){
+  const activePageDisplay =()  => {
+    if (activePage === 0){
       return <AddDescription formData = {formData} setFormData = {setFormData}/>
-    } else if (page === 1){
+    } else if (activePage === 1){
       return <AddFeelings formData = {formData} setFormData = {setFormData}/>;
     } else {
       return <AddNeeds formData = {formData} setFormData = {setFormData}/>;
@@ -47,42 +52,49 @@ const AddConflictForm = (props) => {
 
   return (
     <>
-      <div className="multi-page-form">
-        <Stepper />
-        <h1>Add Event</h1>
-        <div className="progressbar">
-          <div
-          style={{ width: page === 0 ? "33.3%" : page === 1 ? "66.6%" : "100%" }}
-          ></div>
-      </div>
-        <div className="header">
-          <h1>{formTitles[page]}</h1>
-        </div>
-        <div className='body'>{pageDisplay()}</div>
+      <Box sx={{ width: '80%' }}>
+        <Typography variant='h1'>Create Conflict</Typography>
+        
+        
+          <Stepper activeStep={activePage} alternativeLabel>
+            {formTitles.map((label, index) => {
+              const stepProps = {};
+              const labelProps = {};
+              return (
+                <Step key={label} {...stepProps}>
+              <StepLabel {...labelProps}>{label}</StepLabel>
+            </Step>
+              );
+            })}
+        </Stepper>
+
+        {activePageDisplay()}
+        
+      </Box>
+
         <div className='footer'>
-          <button
-          className='btn'
-          disabled = {page === 0}
-          onClick={() => {setPage((currPage) => currPage - 1)}}
+        
+          <Button
+          sx={{ mr: 1 }}
+          color="inherit"
+          disabled = {activePage === 0}
+          onClick={() => {setActivePage((currentActivePage) => currentActivePage - 1)}}
           >
             Prev
-          </button>
-          <button
-            className='btn'
+          </Button>
+
+          <Button
             onClick={() => {
-              if (page === formTitles.length - 1) {
-                alert("FORM SUBMITTED");
-                console.log(formData);
+              if (activePage === formTitles.length - 1) {
                 handleAddConflictSubmission();
               } else {
-                setPage((currPage) => currPage + 1);
+                setActivePage((curractivePage) => curractivePage + 1);
               }
             }}
           >
-            {page === formTitles.length - 1 ? "Submit" : "Next"}
-          </button>
+            {activePage === formTitles.length - 1 ? "Submit" : "Next"}
+          </Button>
         </div>
-      </div>
     </>
   );
 };

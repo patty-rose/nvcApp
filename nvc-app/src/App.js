@@ -15,7 +15,7 @@ import EditNeedsStatement from './pages/EditNeedsStatement';
 import EditApologyStatement from './pages/EditApologyStatement';
 import TEMP from './pages/TEMP.js';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import AddConflictForm from './pages/AddConflictForm.js';
+import AddConflictForm from './pages/tempAddConflictForm.js';
 
 
 function App() {
