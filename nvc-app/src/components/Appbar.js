@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { auth } from "../firebase.js";
-import { getAuth, signOut } from "firebase/auth";
+import { signOut } from "firebase/auth";
 
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -13,21 +13,17 @@ import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 
 
 const authenticatedPages = [['View Conflict Events', 'conflictList'], ['Add Conflict Event', '/addEvent']];
-const anonymousPages = [];
 const authenticatedAccountButtons = [['Log Out', '/signIn', '() => {handleLogout}']];
 const anonAccountButtons = [['Log In', '/signIn'], ['Join', '/signUp']];
 
 const Appbar = props => {
   const [anchorElNav, setAnchorElNav] = useState(null);
-  const [anchorElUser, setAnchorElUser] = useState(null);
   const [pages, setPages] = useState([]);
   const [accountButtons, setAccountButtons] = useState([])
   const {currentUser} = props;
@@ -48,16 +44,9 @@ const Appbar = props => {
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
-  };
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
   };
 
   const handleLogout = async () => {

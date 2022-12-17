@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { auth } from "../firebase.js";
-import { signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -23,7 +23,6 @@ const SignIn = () => {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [signinErrorMessage, setSigninErrorMessage] = useState('');
-  const [signoutErrorMessage, setSignoutErrorMessage] = useState('');
   const navigate = useNavigate();
 
   const handleClickShowPassword = () => setShowPassword(!showPassword);
