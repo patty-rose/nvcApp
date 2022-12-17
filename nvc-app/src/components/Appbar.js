@@ -122,7 +122,7 @@ const Appbar = props => {
                     <Link 
                     style={{ 
                       textDecoration: 'none', 
-                      color:'#1c2020'}} 
+                      color: 'inherit'}} 
                       to={page[1]} >
                       {page[0]}
                     </Link>

@@ -2,12 +2,12 @@ import { Outlet } from 'react-router-dom';
 import Navbar from './Navbar';
 import Appbar from './Appbar';
 import PropTypes from 'prop-types';
-
+import Tempbar from './Tempbar';
 const SharedLayout = props => {
   const {user} = props;
   return (
     <>
-      <Appbar currentUser = {user}/>
+      <Tempbar currentUser = {user}/>
       <Outlet />
     </>
   );
