@@ -1,13 +1,12 @@
 import { Outlet } from 'react-router-dom';
-import Navbar from './Navbar';
-import Appbar from './Appbar';
 import PropTypes from 'prop-types';
+import Navbar from './Navbar';
 
 const SharedLayout = props => {
   const {user} = props;
   return (
     <>
-      <Appbar currentUser = {user}/>
+      <Navbar currentUser = {user}/>
       <Outlet />
     </>
   );

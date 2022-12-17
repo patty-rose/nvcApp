@@ -83,10 +83,6 @@ function App() {
     return () => unSubscribe();
   }, [currentUser]);
 
-  useEffect(() => { 
-    console.log(error);
-  }, [error]);
-
   //CRUD handlers:
   const handleAddingNewConflictToList = async (newConflictData) => {
       const docRef = await addDoc(collection(db, "conflicts"), newConflictData);
