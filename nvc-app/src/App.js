@@ -47,7 +47,6 @@ function App() {
   
   //query firestore db for 'conflicts' docs:
   useEffect(() => { 
-    console.log(currentUser);
     const conflictsRef = collection(db, "conflicts");
     const queryByUidAndDate = query(
       conflictsRef,

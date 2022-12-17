@@ -30,7 +30,6 @@ const Appbar = props => {
 
 
   useEffect(() => {
-    console.log(currentUser);
     if(currentUser){
       setPages(authenticatedPages);
       setAccountButtons(authenticatedAccountButtons);
