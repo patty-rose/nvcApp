@@ -4,8 +4,8 @@ import { grey, red } from '@mui/material/colors';
 const customTheme = createTheme({
   palette: {
     primary: {
-      light: 'FFFFFF',
-      main: '#d2f5fa',
+      light: '#d2f5fa',
+      main: '#0f1b4c',
       dark: '#a0ebf3',
       darkest: '#050a30',
     },
