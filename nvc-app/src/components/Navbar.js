@@ -4,6 +4,7 @@ import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 
 const Navbar = () => {
   const [tabValue, setTabValue] = useState(0);
