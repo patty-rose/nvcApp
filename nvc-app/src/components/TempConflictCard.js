@@ -68,7 +68,7 @@ export function ConflictCard(props) {
         <CardHeader
           action={
             <IconButton aria-label="edit">
-              <Link to={`/${id}`} className='btn'><EditIcon /></Link>
+              <Link to={`/edit/${id}`} className='btn'><EditIcon /></Link>
             </IconButton>
           }
           title={title}
