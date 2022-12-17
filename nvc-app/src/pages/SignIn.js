@@ -13,13 +13,21 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import InputAdornment from '@mui/material/InputAdornment';
+import IconButton from '@mui/material/IconButton';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [signinErrorMessage, setSigninErrorMessage] = useState('');
   const [signoutErrorMessage, setSignoutErrorMessage] = useState('');
   const navigate = useNavigate();
+
+  const handleClickShowPassword = () => setShowPassword(!showPassword);
+  const handleMouseDownPassword = () => setShowPassword(!showPassword);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,16 +37,6 @@ const SignIn = () => {
       navigate('/conflictList')
     } catch (e) {
       setSigninErrorMessage(`There was an error signing in: ${e.message}`);
-    }
-  };
-
-  const handleLogout = async () => {
-    setSignoutErrorMessage('');
-    try {
-      await signOut(auth);
-      navigate('/');
-    } catch (e) {//current error handling does not catch and alert unsuccessful logouts
-      setSignoutErrorMessage(`There was an error signing out: ${e.message}`);
     }
   };
 
@@ -54,14 +52,6 @@ const SignIn = () => {
             alignItems: 'center',
           }}
         >
-          <Button
-              onClick={handleLogout}
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Sign Out
-            </Button>
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}></Avatar>
           <Typography component="h1" variant="h5">
             Sign in
@@ -79,15 +69,28 @@ const SignIn = () => {
               onChange={(e) => setEmail(e.target.value)}
             />
             <TextField
-              margin="normal"
+              // margin="normal"
               required
               fullWidth
               name="password"
               label="Password"
-              type="password"
+              type={showPassword ? "text" : "password"}
               id="password"
               autoComplete="current-password"
               onChange={(e) => setPassword(e.target.value)}
+              InputProps={{ // <-- This is where the toggle button is added.
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                    >
+                      {showPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>
+                )
+              }}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
@@ -102,9 +105,9 @@ const SignIn = () => {
               Sign In
             </Button>
             {signinErrorMessage}
-            <Grid container>
+            <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link to='/signUp' className='underline'> "Don't have an account? Sign up.</Link>
+                <Link to='/signUp' className='underline'> Don't have an account? Sign up</Link>
               </Grid>
             </Grid>
           </Box>

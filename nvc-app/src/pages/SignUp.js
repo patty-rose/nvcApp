@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {useNavigate} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 
 import { auth } from "../firebase.js";
 import { createUserWithEmailAndPassword } from "firebase/auth";
@@ -10,18 +10,25 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 // import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import InputAdornment from '@mui/material/InputAdornment';
+import IconButton from '@mui/material/IconButton';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 const SignUp = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+
+  const handleClickShowPassword = () => setShowPassword(!showPassword);
+  const handleMouseDownPassword = () => setShowPassword(!showPassword);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -69,10 +76,23 @@ const SignUp = () => {
                   fullWidth
                   name="password"
                   label="Password"
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   id="password"
                   autoComplete="new-password"
                   onChange={(e) => setPassword(e.target.value)}
+                  InputProps={{ // <-- This is where the toggle button is added.
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                        >
+                          {showPassword ? <Visibility /> : <VisibilityOff />}
+                        </IconButton>
+                      </InputAdornment>
+                    )
+                  }}
                 />
               </Grid>
             </Grid>
@@ -87,7 +107,7 @@ const SignUp = () => {
             {error}
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="#" variant="body2" color='secondary'>
+                <Link to='/signIn' variant="body2" color='secondary'>
                   Already have an account? Sign in
                 </Link>
               </Grid>
