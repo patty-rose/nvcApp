@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Navbar from './Navbar';
+import Footer from './Footer';
 
 const SharedLayout = props => {
   const {user} = props;
@@ -8,6 +9,7 @@ const SharedLayout = props => {
     <>
       <Navbar currentUser = {user}/>
       <Outlet />
+      <Footer />
     </>
   );
 };

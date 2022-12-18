@@ -19,8 +19,8 @@ const Splash = () => {
           <Typography variant='body'>Venter helps you manage conflicts by guiding you through describing what happened and how you felt, identifying any unment needs you may have, and drafting statements you can say to those you are in conflict with. Get started now!
           </Typography>
           <Grid container justifyContent='space-around'>
-            <Grid item>
-              <CustomButton onClickFunction={()=>{handleJoinClick()}} buttonText="Join Venter" />
+            <Grid item sx={{mt: 2}}>
+              <CustomButton  onClickFunction={()=>{handleJoinClick()}} buttonText="Join Venter" />
             </Grid>
           </Grid>
         </Grid>
