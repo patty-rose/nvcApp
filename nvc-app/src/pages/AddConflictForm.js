@@ -42,6 +42,7 @@ const AddConflictForm = (props) => {
       })}
     </Stepper>
   )
+  
   const activePageDisplay =()  => {
     if (activePage === 0){
       return <AddDescription formData = {formData} setFormData = {setFormData}/>
