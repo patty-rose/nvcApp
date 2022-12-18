@@ -67,12 +67,13 @@ const AddDescription = (props) => {
         </Grid>
         <Grid item xs={12}>
         <TextField
-          id="conflictDate"
-          defaultValue={formData.conflictDate}
+          id="date"
+          defaultValue={formData.date}
           label="Choose an aproximate date this happened:"
           type="date"
           onChange={(e) => {
-            setFormData({ ...formData, conflictDate: e.target.value });
+            setFormData({ ...formData, date: e.target.value });
+            console.log(e.target.value);
           }}
           sx={{ width: 220 }}
           InputLabelProps={{

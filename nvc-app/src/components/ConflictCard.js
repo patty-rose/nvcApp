@@ -12,6 +12,8 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import EditIcon from '@mui/icons-material/Edit';
+import PreviewIcon from '@mui/icons-material/Preview';
+import { Box } from "@mui/system";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -72,9 +74,14 @@ export function ConflictCard(props) {
       <Card elevation={2} sx={{ xs: 'flex', maxWidth: 500 , mt: 3 }}>
         <CardHeader 
           action={
-            <IconButton aria-label="edit">
-              <Link style={{textDecoration: 'none', color: '#4F5361'}} to={`/edit/${id}`} className='btn'><EditIcon /></Link>
-            </IconButton>
+            <Box>
+              <IconButton aria-label="view">
+                <Link style={{textDecoration: 'none', color: '#4F5361'}} to={`/${id}`} className='btn'><PreviewIcon /></Link>
+              </IconButton>
+              <IconButton aria-label="edit">
+                <Link style={{textDecoration: 'none', color: '#4F5361'}} to={`/edit/${id}`} className='btn'><EditIcon /></Link>
+              </IconButton>
+            </Box>
           }
           title={title}
           subheader={conflictDate}

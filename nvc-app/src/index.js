@@ -11,8 +11,6 @@ import theme from './theme';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
-console.log(theme);
-
 root.render(
   <React.StrictMode>
 

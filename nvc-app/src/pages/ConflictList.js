@@ -1,6 +1,6 @@
 import React from "react";
 import {Link} from 'react-router-dom';
-import Conflict from "../components/TempConflictCard";
+import Conflict from "../components/ConflictCard";
 import PropTypes from "prop-types";
 import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
@@ -16,8 +16,8 @@ const ConflictList = (props) => {
       <Card elevation={0} sx={{ xs: 'flex', maxWidth: 550,  ml: 20,   }}>
         <CardHeader
           action={
-            <IconButton aria-label="edit">
-              <Link to='/addEvent' className='btn'><AddCircleIcon /></Link>
+            <IconButton aria-label="add">
+              <Link style ={{textDecoration: 'none', color: '#4F5361'}}  to='/addEvent' className='btn'><AddCircleIcon /></Link>
             </IconButton>
           }
           title= 'Your conflicts:'
@@ -48,8 +48,6 @@ const ConflictList = (props) => {
         </Grid>
       </CardContent>
     </Card>
-       
-      
     </React.Fragment>
   );
 };

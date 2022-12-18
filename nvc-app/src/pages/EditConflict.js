@@ -17,7 +17,6 @@ function EditConflict (props) {
   const { conflictId } = useParams();
 
   const thisConflict = props.conflictList.find((conflict) => conflict.id === conflictId);
-  console.log(thisConflict);
   const [formData, setFormData] = useState({
     title: thisConflict.title,
     conflictDate: thisConflict.conflictDate,

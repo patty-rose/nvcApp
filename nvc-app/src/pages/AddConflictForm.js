@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 // import AddConflict from '../components/AddConflict';
 import AddFeelings from '../components/AddFeelings';
@@ -15,6 +15,8 @@ import Typography from '@mui/material/Typography';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
+import feelingsImage from '../img/feelings.png';
+import statesImage from '../img/states.png';
 
 const AddConflictForm = (props) => {
   const [activePage, setActivePage] = useState(0);
@@ -107,7 +109,31 @@ const AddConflictForm = (props) => {
         </Button>
         </Box>
       </Box>
-
+      {activePage === 1 ? <Box><Box
+            component="img"
+            sx={{
+              height: 'auto',
+              width: '100%',
+            }}
+            alt="Two people shaking hands sitting close togehter at a table"
+            src={feelingsImage}
+          /> <Box
+          component="img"
+          sx={{
+            height: 'auto',
+            width: '100%',
+          }}
+          alt="Two people shaking hands sitting close togehter at a table"
+          src={statesImage}
+        /> </Box>: <Box
+          component="img"
+          sx={{
+            height: 'auto',
+            width: '100%',
+          }}
+          alt="Two people shaking hands sitting close togehter at a table"
+          src={statesImage}
+        />}
 
       </CardContent>
     </Card>

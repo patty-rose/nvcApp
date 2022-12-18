@@ -30,7 +30,6 @@ function EditNeedsStatement (props) {
   });
 
   const formTitles = ["4 step needs request statement builder", "Finalize your needs request statement"];
-
   const navigate = useNavigate();
   const { conflictId } = useParams();
   const thisConflict = props.conflictList.find((conflict) => conflict.id === conflictId);
