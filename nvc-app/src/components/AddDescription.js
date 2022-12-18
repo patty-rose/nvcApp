@@ -5,6 +5,7 @@ import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognitio
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
+import FormLabel from '@mui/material/FormLabel';
 
 const AddDescription = (props) => {
 
@@ -51,35 +52,35 @@ const AddDescription = (props) => {
 <>
     <Box sx={{mt: 5, mr:5, ml:5, mb: 5}}>
       <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id='title'
-                  defaultValue={formData.title}
-                  label="Give it a simple title:"
-                  name='title'
-                  onChange={(e) => {
-                    setFormData({ ...formData, title: e.target.value });
-                  }}
-                />
-              </Grid>
-              <Grid item xs={12}>
-              <TextField
-                id="conflictDate"
-                defaultValue={formData.conflictDate}
-                label="Choose an aproximate date this happened:"
-                type="date"
-                onChange={(e) => {
-                  setFormData({ ...formData, conflictDate: e.target.value });
-                }}
-                sx={{ width: 220 }}
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              />
-              </Grid>
-              <div>
+        <Grid item xs={12}>
+          <TextField
+            required
+            fullWidth
+            id='title'
+            defaultValue={formData.title}
+            label="Give it a simple title:"
+            name='title'
+            onChange={(e) => {
+              setFormData({ ...formData, title: e.target.value });
+            }}
+          />
+        </Grid>
+        <Grid item xs={12}>
+        <TextField
+          id="conflictDate"
+          defaultValue={formData.conflictDate}
+          label="Choose an aproximate date this happened:"
+          type="date"
+          onChange={(e) => {
+            setFormData({ ...formData, conflictDate: e.target.value });
+          }}
+          sx={{ width: 220 }}
+          InputLabelProps={{
+            shrink: true,
+          }}
+        />
+        </Grid>
+        <div>
           <p>
             <button className='btn' onClick={() => {handleStartMicrophone()}}>
               Start
@@ -87,20 +88,20 @@ const AddDescription = (props) => {
             <button className='btn' onClick={() => {handleStopMicrophone()}}>Stop</button>
             Microphone: {listening ? 'on' : 'off'}
           </p>
-        </div>
-              <Grid item xs={12}>
-              Let it out! Describe what happened with text or press the microphone button for text-to-speech!
-                <TextField
-                  fullWidth
-                  id='description'
-                  label=""
-                  name='description'
-                  multiline
-                  rows={5}
-                  value={ listening ? formData.description.concat(' ' + transcript) : formData.description }
-                  onChange={handleDescriptionInputChange}
-                />
-              </Grid>
+        </div>   
+        <Grid item xs={12}>
+          <FormLabel>Let it out! Describe what happened with text or press the microphone button for text-to-speech!</FormLabel>
+          <TextField
+            fullWidth
+            id='description'
+            label=""
+            name='description'
+            multiline
+            rows={5}
+            value={ listening ? formData.description.concat(' ' + transcript) : formData.description }
+            onChange={handleDescriptionInputChange}
+          />
+        </Grid>
       </Grid>
     </Box>
     </>

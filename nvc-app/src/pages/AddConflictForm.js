@@ -75,7 +75,6 @@ const AddConflictForm = (props) => {
         />
 
       <CardContent>
-
       <Box>
       <Card elevation={2} sx={{ xs: 'flex', width: '90%'}}>
         <CardContent>
