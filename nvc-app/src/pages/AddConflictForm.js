@@ -68,7 +68,7 @@ const AddConflictForm = (props) => {
 
   return (
     <>
-    <Card elevation={0} sx={{ xs: 'flex', width: '75%',  ml: 15 }}>
+    <Card elevation={0} sx={{ xs: 'flex', width: '80%',  ml: 15 }}>
         <CardHeader
           title="Log New Conflict Event"
           subheader= {stepperDisplay}
@@ -76,9 +76,9 @@ const AddConflictForm = (props) => {
 
       <CardContent>
       <Box>
-      <Card elevation={2} sx={{ xs: 'flex', width: '90%'}}>
+      <Card elevation={2} sx={{ xs: 'flex', width: '98%'}}>
         <CardContent>
-         {activePageDisplay()}
+          {activePageDisplay()}
         </CardContent>
       </Card>
 

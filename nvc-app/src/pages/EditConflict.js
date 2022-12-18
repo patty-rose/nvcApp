@@ -75,13 +75,13 @@ function EditConflict (props) {
 
   return (
     <React.Fragment>
-      <Card elevation={0} sx={{ xs: 'flex', width: '75%',  ml: 15 }}>
+      <Card elevation={0} sx={{ xs: 'flex', width: '85%',  ml: 15 }}>
         <CardHeader
           title= {`Edit Conflict`}
           // subheader= {`Title: ${formData.title}`}
         />
         <CardContent>
-          <Card elevation={2} sx={{ xs: 'flex', width: '90%'}}>
+          <Card elevation={2} sx={{ xs: 'flex', width: '98%'}}>
             <Box component="form" onSubmit={handleEditConflictSubmission} noValidate sx={{ mt: 1 }}>
               <Box sx={{mt: 5, mr:5, ml:5, mb: 5}}>
                 <Grid container spacing={2}>

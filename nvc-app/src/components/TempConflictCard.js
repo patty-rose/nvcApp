@@ -73,9 +73,11 @@ export function ConflictCard(props) {
           }
           title={title}
           subheader={conflictDate}
-        />
+        ></CardHeader>
 
       <CardContent>
+      <Link to={`/${props.id}`} className='btn'>
+        details</Link>
         <Typography variant="body2" color="text.secondary">
           {description}
         </Typography>
