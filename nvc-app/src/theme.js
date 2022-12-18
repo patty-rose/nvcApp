@@ -32,7 +32,7 @@ const theme = {
       placeholder: grey[200],
     },
   },
-  shadows: Array(25).fill('none')
+  // shadows: Array(25).fill('none')
 };
 
 export default theme;

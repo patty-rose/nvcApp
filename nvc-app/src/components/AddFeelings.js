@@ -1,20 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import TextField from '@mui/material/TextField';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
 
 const AddFeelings = (props) => {
   const {formData, setFormData} = props;
   return (
-    <div className='feelings-container'>
-      <input
-          type='text'
-          name='feeling'
-          placeholder='How did that make you feel?'
-          defaultValue={formData.feelings}
-          onChange={(e) => {
-            setFormData({ ...formData, feelings: e.target.value });
-          }}
-      />
-    </div>
+    <Box sx={{mt: 5, mr:5, ml:5, mb: 5}}>
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <TextField
+            fullWidth
+            id='feeling'
+            defaultValue={formData.feeling}
+            label="How did this make you feel?"
+            name='feeling'
+            onChange={(e) => {
+              setFormData({ ...formData, feeling: e.target.value });
+            }}
+          />
+        </Grid>
+      </Grid>
+    </Box>
   )
 }
 
