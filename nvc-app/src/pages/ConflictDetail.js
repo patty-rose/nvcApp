@@ -15,8 +15,6 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { FormLabel, IconButton, TextField } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import CustomButton from '../components/CustomButton';
-import MicNoneIcon from '@mui/icons-material/MicNone';
-import MicIcon from '@mui/icons-material/Mic';
 
 const ConflictDetail = (props) => {
   const { conflictId } = useParams();

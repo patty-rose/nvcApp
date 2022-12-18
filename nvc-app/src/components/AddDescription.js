@@ -6,6 +6,10 @@ import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import FormLabel from '@mui/material/FormLabel';
+import MicNoneIcon from '@mui/icons-material/MicNone';
+import MicIcon from '@mui/icons-material/Mic';
+import { IconButton, InputAdornment } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 const AddDescription = (props) => {
 
@@ -81,7 +85,14 @@ const AddDescription = (props) => {
           }}
         />
         </Grid>
-        <div>
+        {/* {listening ? <IconButton color="secondary" onClick = {() => {handleStopMicrophone()}} aria-label="mic off">
+              < MicNoneIcon />
+            </IconButton> : 
+        <IconButton onClick={() => {handleStartMicrophone()}} aria-label="mic on">
+          <MicIcon />
+        </IconButton>} */}
+        
+        {/* <div>
           <p>
             <button className='btn' onClick={() => {handleStartMicrophone()}}>
               Start
@@ -89,7 +100,8 @@ const AddDescription = (props) => {
             <button className='btn' onClick={() => {handleStopMicrophone()}}>Stop</button>
             Microphone: {listening ? 'on' : 'off'}
           </p>
-        </div>   
+        </div>    */}
+
         <Grid item xs={12}>
           <FormLabel>Let it out! Describe what happened with text or press the microphone button for text-to-speech!</FormLabel>
           <TextField
@@ -101,6 +113,23 @@ const AddDescription = (props) => {
             rows={5}
             value={ listening ? formData.description.concat(' ' + transcript) : formData.description }
             onChange={handleDescriptionInputChange}
+            InputProps={{ 
+              endAdornment: (
+                <InputAdornment position="end">
+                  {listening ? 
+                  <IconButton 
+                    color="secondary" 
+                    onClick = {() => {handleStopMicrophone()}} aria-label="mic off">
+                      < MicNoneIcon />
+                  </IconButton> 
+                  : 
+                  <IconButton 
+                    onClick={() => {handleStartMicrophone()}} aria-label="mic on">
+                      <MicIcon />
+                  </IconButton>}
+                </InputAdornment>
+              )
+            }}
           />
         </Grid>
       </Grid>

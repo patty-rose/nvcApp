@@ -78,7 +78,7 @@ const SignUp = () => {
                   id="password"
                   autoComplete="new-password"
                   onChange={(e) => setPassword(e.target.value)}
-                  InputProps={{ // <-- This is where the toggle button is added.
+                  InputProps={{ 
                     endAdornment: (
                       <InputAdornment position="end">
                         <IconButton
