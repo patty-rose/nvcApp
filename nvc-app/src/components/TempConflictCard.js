@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Paper from '@mui/material/Paper'
 import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
@@ -27,9 +27,14 @@ const ExpandMore = styled((props) => {
 export function ConflictCard(props) {
   const {title, conflictDate, description, feeling, need, needsStatement, apologyStatement, id} = props;
   const [expanded, setExpanded] = React.useState(false);
+  const navigate = useNavigate();
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
+  };
+
+  const handleCardClick = (thisId) => {
+    navigate(`/${thisId}`);
   };
 
   const Item = styled(Paper)(({ theme }) => ({
@@ -65,19 +70,17 @@ export function ConflictCard(props) {
     <React.Fragment>
 
       <Card elevation={2} sx={{ xs: 'flex', maxWidth: 500 , mt: 3 }}>
-        <CardHeader
+        <CardHeader 
           action={
             <IconButton aria-label="edit">
-              <Link to={`/edit/${id}`} className='btn'><EditIcon /></Link>
+              <Link style={{textDecoration: 'none', color: '#4F5361'}} to={`/edit/${id}`} className='btn'><EditIcon /></Link>
             </IconButton>
           }
           title={title}
           subheader={conflictDate}
         ></CardHeader>
 
-      <CardContent>
-      <Link to={`/${props.id}`} className='btn'>
-        details</Link>
+      <CardContent onClick={()=>{handleCardClick(id)}} sx={{cursor: "pointer"}}>
         <Typography variant="body2" color="text.secondary">
           {description}
         </Typography>

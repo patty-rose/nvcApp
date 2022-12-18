@@ -22,8 +22,8 @@ const AddConflictForm = (props) => {
     title: "",
     date: null,
     description: "",
-    feelings: "",
-    needs: ""
+    feeling: "",
+    need: ""
   });
   const navigate = useNavigate();
 
@@ -56,8 +56,8 @@ const AddConflictForm = (props) => {
     const docRef = await props.onNewConflictCreation({
       title: formData.title,
       description: formData.description, 
-      feeling: formData.feelings, 
-      need: formData.needs,
+      feeling: formData.feeling, 
+      need: formData.need,
       needsStatement: null,
       apologyStatement: null,
       conflictDate: formData.date,

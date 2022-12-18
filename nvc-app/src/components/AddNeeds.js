@@ -15,9 +15,9 @@ const AddNeeds = (props) => {
           id='need'
           label="What unmet need do you have in this situation?"
           name='need'
-          defaultValue={formData.needs}
+          defaultValue={formData.need}
           onChange={(e) => {
-            setFormData({ ...formData, needs: e.target.value });
+            setFormData({ ...formData, need: e.target.value });
           }}
         />
       </Grid>

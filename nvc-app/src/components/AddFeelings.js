@@ -13,12 +13,11 @@ const AddFeelings = (props) => {
           <TextField
             fullWidth
             id='feeling'
-            defaultValue={formData.feelings}
+            defaultValue={formData.feeling}
             label="How did this make you feel?"
             name='feeling'
-            defaultValue={formData.feelings}
             onChange={(e) => {
-              setFormData({ ...formData, feelings: e.target.value });
+              setFormData({ ...formData, feeling: e.target.value });
             }}
           />
         </Grid>

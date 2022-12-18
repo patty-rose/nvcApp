@@ -1,4 +1,4 @@
-import { Link, useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import PropTypes from "prop-types";
 import React from "react";
 
@@ -20,11 +20,19 @@ const ConflictDetail = (props) => {
 
   const thisConflict = props.conflictList.find((conflict) => conflict.id === conflictId);
 
-  const { title, conflictDate, description, feelings, needs, needsStatement, apologyStatement, id } = thisConflict;
+  const { title, conflictDate, description, feeling, need, needsStatement, apologyStatement, id } = thisConflict;
   console.log(id);
 
   function handleClickingEdit(thisId){
     navigate(`/edit/${thisId}`);
+  }
+
+  function handleEditNeedsClick(thisId){
+    navigate(`/editNeedsStatement/${thisId}`);
+  }
+
+  function handleEditApologyClick(thisId){
+    navigate(`/editApologyStatement/${thisId}`);
   }
   function handleClickingDelete(thisId){
     props.onClickingDelete(thisId);
@@ -33,7 +41,6 @@ const ConflictDetail = (props) => {
 
   return (
     <React.Fragment>
-      <div>
       <Card elevation={0} sx={{ xs: 'flex', width: '85%',  ml: 15 }}>
         <CardHeader
           title= {`Conflict Details`}
@@ -83,7 +90,7 @@ const ConflictDetail = (props) => {
               </Grid>
               <Grid item xs={8}>
               <Typography variant='h5'>
-                  {feelings}
+                  {feeling}
                 </Typography>
               </Grid>
 
@@ -94,13 +101,17 @@ const ConflictDetail = (props) => {
               </Grid>
               <Grid item xs={8}>
               <Typography variant='h5'>
-                  {needs}
+                  {need}
                 </Typography>
               </Grid>
 
               <Grid item xs={4}> 
-              <Typography variant='h6'  align="right" sx={{mr: 2}}>
-                  Needs statement:
+              
+                <Typography variant='h6'  align="right" sx={{mr: 2}}>
+                  <IconButton aria-label="edit" onClick={()=>{handleEditNeedsClick(id)}}>
+                    <EditIcon />
+                  </IconButton>
+                    Needs statement:
                 </Typography>
               </Grid>
               <Grid item xs={8}>
@@ -110,7 +121,10 @@ const ConflictDetail = (props) => {
               </Grid>
 
               <Grid item xs={4}> 
-              <Typography variant='h6'  align="right" sx={{mr: 2}}>
+                <Typography variant='h6'  align="right" sx={{mr: 2}}>
+                <IconButton aria-label="edit" onClick={()=>{handleEditApologyClick(id)}}>
+                  <EditIcon />
+                </IconButton>
                   Apology Statment:
                 </Typography>
               </Grid>
@@ -125,20 +139,6 @@ const ConflictDetail = (props) => {
           </Card>
         </CardContent>
       </Card>
-  
-        
-        {/* <Link to={`/${props.id}`} className='btn'>
-        details</Link> */}
-        <Link to={`/edit/${id}`} className='btn'>
-        edit</Link>
-        <Link to={`/editNeedsStatement/${id}`} className='btn'>
-        create needs statement</Link>
-        <Link to={`/editApologyStatement/${id}`} className='btn'>
-        create apology statement</Link>
-        <button className='btn'
-        onClick={()=> handleClickingDelete(id)}>Delete</button>
-        <hr/>
-      </div>
     </React.Fragment>
   );
 };
