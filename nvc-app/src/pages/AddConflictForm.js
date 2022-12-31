@@ -115,7 +115,7 @@ const AddConflictForm = (props) => {
               height: 'auto',
               width: '100%',
             }}
-            alt="Two people shaking hands sitting close togehter at a table"
+            alt="list of feelings"
             src={feelingsImage}
           /> <Box
           component="img"
@@ -123,17 +123,9 @@ const AddConflictForm = (props) => {
             height: 'auto',
             width: '100%',
           }}
-          alt="Two people shaking hands sitting close togehter at a table"
+          alt="informaiton on emotional states"
           src={statesImage}
-        /> </Box>: <Box
-          component="img"
-          sx={{
-            height: 'auto',
-            width: '100%',
-          }}
-          alt="Two people shaking hands sitting close togehter at a table"
-          src={statesImage}
-        />}
+        /> </Box> : null}
 
       </CardContent>
     </Card>
