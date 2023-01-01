@@ -17,11 +17,18 @@ namespace VenterApi.Controllers
       _db = db;
     }
 
-    // GET api/conflicts
+    // GET: api/Conflicts
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Conflict>>> Get()
+    public async Task<ActionResult<IEnumerable<Conflict>>> Get(string userId)
     {
-      return await _db.Conflicts.ToListAsync();
+      var query = _db.Conflicts.AsQueryable();
+
+      if (userId != null)
+      {
+        query = query.Where(entry => entry.UserId == userId);
+      }
+
+      return await query.ToListAsync();
     }
 
     // POST api/conflicts
@@ -46,6 +53,58 @@ namespace VenterApi.Controllers
         }
 
         return conflict;
+    }
+
+
+     // PUT: api/Conflicts/5
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Put(int id, Conflict conflict)
+    {
+      if (id != conflict.ConflictId)
+      {
+        return BadRequest();
+      }
+
+      _db.Entry(conflict).State = EntityState.Modified;
+
+      try
+      {
+        await _db.SaveChangesAsync();
+      }
+      catch (DbUpdateConcurrencyException)
+      {
+        if (!ConflictExists(id))
+        {
+          return NotFound();
+        }
+        else
+        {
+          throw;
+        }
+      }
+
+      return NoContent();
+    }
+
+    private bool ConflictExists(int id)
+    {
+      return _db.Conflicts.Any(e => e.ConflictId == id);
+    }
+
+     // DELETE: api/Conflicts/5
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteConflict(int id)
+    {
+      var conflict = await _db.Conflicts.FindAsync(id);
+      if (conflict == null)
+      {
+        return NotFound();
+      }
+
+      _db.Conflicts.Remove(conflict);
+      await _db.SaveChangesAsync();
+
+      return NoContent();
     }
 
 
