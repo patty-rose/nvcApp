@@ -34,7 +34,7 @@ function App() {
     }
   });
 
-  //protected route comp:
+  //protected route component:
   const ProtectedRoute = ({ children }) => {
     if (!currentUser) {
       return <Navigate to='/' />;
@@ -102,6 +102,10 @@ function App() {
       });
     }, [currentUser])
 
+  //dotnet backend CRUD handlers:
+  handleAddingNewConflictToList
+
+
   //CRUD handlers:
   const handleAddingNewConflictToList = async (newConflictData) => {
       const docRef = await addDoc(collection(db, "conflicts"), newConflictData);
@@ -120,7 +124,6 @@ function App() {
   return(
     <BrowserRouter>
         <Routes>
-        
           <Route path='/' element={<SharedLayout user={currentUser}/>}>
             <Route index element = {<Home/>} />
             <Route path='signIn' element={<SignIn />} />
@@ -130,16 +133,17 @@ function App() {
             <Route path='temp' element={<TEMP userId = {currentUser && currentUser.uid} />} />
 
             <Route path='conflictList' element={<ProtectedRoute><ConflictList conflictList = {mainConflictList} tempList = {conflicts} /></ProtectedRoute>} />
-            
 
             <Route path='addEvent' element={<ProtectedRoute><AddConflictForm userId = {currentUser?.uid} onNewConflictCreation={handleAddingNewConflictToList}/></ProtectedRoute>}>
             </Route>
 
-            <Route path = 'editNeedsStatement/:conflictId' element = {<ProtectedRoute><EditNeedsStatement conflictList = {mainConflictList} onEditConflict={handleEditingConflictInList} /></ProtectedRoute>} />
-            <Route path = 'editApologyStatement/:conflictId' element = {<ProtectedRoute><EditApologyStatement conflictList = {mainConflictList} onEditConflict={handleEditingConflictInList} /></ProtectedRoute>} />
-
             <Route path = ':conflictId' element = {<ProtectedRoute><ConflictDetail conflictList = {mainConflictList} onClickingDelete={handleDeletingConflict}/></ProtectedRoute>} />
+            
             <Route path = 'edit/:conflictId' element = {<ProtectedRoute><EditConflict conflictList = {mainConflictList} onEditConflict={handleEditingConflictInList}/></ProtectedRoute>} />
+
+            <Route path = 'editNeedsStatement/:conflictId' element = {<ProtectedRoute><EditNeedsStatement conflictList = {mainConflictList} onEditConflict={handleEditingConflictInList} /></ProtectedRoute>} />
+
+            <Route path = 'editApologyStatement/:conflictId' element = {<ProtectedRoute><EditApologyStatement conflictList = {mainConflictList} onEditConflict={handleEditingConflictInList} /></ProtectedRoute>} />
           </Route>
         </Routes>
     </BrowserRouter>

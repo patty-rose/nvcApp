@@ -8,6 +8,7 @@ namespace VenterApi.Controllers
 {
   [Route("api/[controller]")]
   [ApiController]
+
   public class ConflictsController : ControllerBase
   {
     private readonly VenterApiContext _db;
@@ -17,7 +18,7 @@ namespace VenterApi.Controllers
       _db = db;
     }
 
-    // GET: api/Conflicts
+    // GET: api/Conflicts?
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Conflict>>> Get(string userId)
     {
@@ -26,6 +27,11 @@ namespace VenterApi.Controllers
       if (userId != null)
       {
         query = query.Where(entry => entry.UserId == userId);
+      }
+
+      else 
+      {
+        query = _db.Conflicts;
       }
 
       return await query.ToListAsync();
