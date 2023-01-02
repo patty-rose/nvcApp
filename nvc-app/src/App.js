@@ -4,7 +4,6 @@ import { db } from './firebase.js';
 import { collection, addDoc, onSnapshot, doc, updateDoc, deleteDoc, query, where } from "firebase/firestore";
 import Home from './pages/Splash';
 import ConflictList from './pages/ConflictList';
-// import AddConflict from './components/AddConflict';
 import Error from './pages/Error';
 import SharedLayout from './components/SharedLayout';
 import ConflictDetail from './pages/ConflictDetail';
@@ -29,13 +28,11 @@ function App() {
 
   onAuthStateChanged(auth, (user) => {
     if (user) {
-      // localStorage.setItem("authUser", JSON.stringify(authUser));
       setCurrentUser(user);
     } else {
       setCurrentUser(null);
-      // localStorage.removeItem("authUser");
     }
-  });//if using local storage also update useState(JSON.parse(localStorage.getItem("authUser")!))
+  });
 
   //protected route comp:
   const ProtectedRoute = ({ children }) => {
@@ -53,7 +50,7 @@ function App() {
       where("userId", "==", currentUser && currentUser.uid)
     );
 
-    const unSubscribe = onSnapshot(
+    const queryLoader = onSnapshot(
       queryByUidAndDate, 
       (querySnapshot) => {
         const conflicts = [];
@@ -80,24 +77,36 @@ function App() {
       }
     );
 
-    return () => unSubscribe();
+    return () => queryLoader();
   }, [currentUser]);
+
+
+
+  //dotnet backend database query:
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [conflicts, setConflicts] = useState([]);
+
+  useEffect(() => {
+    fetch(`api/conflicts?userId=${currentUser && currentUser.uid}`)
+      .then(response => response.json())
+      .then((jsonifiedResponse) => {
+          setConflicts(jsonifiedResponse)
+          setIsLoaded(true)
+          console.log("jsonified response:", jsonifiedResponse)
+          console.log("temp conflicts:", conflicts)
+          console.log("main conflicts list:", mainConflictList)
+        })
+      .catch((error) => {
+        setError(error)
+        setIsLoaded(true)
+      });
+    }, [currentUser])
 
   //CRUD handlers:
   const handleAddingNewConflictToList = async (newConflictData) => {
       const docRef = await addDoc(collection(db, "conflicts"), newConflictData);
       return docRef;
   }
-
-  // const handleAddingNewConflictToList2 = (newConflictData) => {
-  //   addDoc(collection(db, "conflicts"), newConflictData)
-  //     .then(function(docRef) {
-  //       console.log("Document written with ID: ", docRef.id);
-  //     })
-  //     .catch(function(error) {
-  //       console.error("Error adding document: ", error);
-  //   });
-  // }
 
   const handleEditingConflictInList = async (conflictToEdit) => {
     const conflictRef = doc(db, "conflicts", conflictToEdit.id);
@@ -110,21 +119,20 @@ function App() {
 
   return(
     <BrowserRouter>
-    {/* potential to wrap App component in index.js with <BrowserRouter> */}
         <Routes>
+        
           <Route path='/' element={<SharedLayout user={currentUser}/>}>
             <Route index element = {<Home/>} />
             <Route path='signIn' element={<SignIn />} />
             <Route path='signUp' element={<SignUp />} />
             <Route path='*' element={<Error />} />
 
-            <Route path='account' element={<ProtectedRoute><TEMP user = {currentUser}/></ProtectedRoute>} />
+            <Route path='temp' element={<TEMP userId = {currentUser && currentUser.uid} />} />
 
-            <Route path='conflictList' element={<ProtectedRoute><ConflictList conflictList = {mainConflictList} /></ProtectedRoute>} />
+            <Route path='conflictList' element={<ProtectedRoute><ConflictList conflictList = {mainConflictList} tempList = {conflicts} /></ProtectedRoute>} />
             
 
             <Route path='addEvent' element={<ProtectedRoute><AddConflictForm userId = {currentUser?.uid} onNewConflictCreation={handleAddingNewConflictToList}/></ProtectedRoute>}>
-              {/* <Route path='/addEvent/addConflict' element={<ProtectedRoute><AddConflict userId = {currentUser?.uid} onNewConflictCreation={handleAddingNewConflictToList}/></ProtectedRoute>} /> */}
             </Route>
 
             <Route path = 'editNeedsStatement/:conflictId' element = {<ProtectedRoute><EditNeedsStatement conflictList = {mainConflictList} onEditConflict={handleEditingConflictInList} /></ProtectedRoute>} />
@@ -132,11 +140,7 @@ function App() {
 
             <Route path = ':conflictId' element = {<ProtectedRoute><ConflictDetail conflictList = {mainConflictList} onClickingDelete={handleDeletingConflict}/></ProtectedRoute>} />
             <Route path = 'edit/:conflictId' element = {<ProtectedRoute><EditConflict conflictList = {mainConflictList} onEditConflict={handleEditingConflictInList}/></ProtectedRoute>} />
-
-            
-            
           </Route>
-
         </Routes>
     </BrowserRouter>
   );

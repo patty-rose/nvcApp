@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link, useNavigate } from 'react-router-dom';
 import { auth } from "../firebase.js";
@@ -29,48 +29,29 @@ export const Navbar = (props) => {
   const navigate = useNavigate();
   const {currentUser} = props;
 
-  
+  //click handlers:
+  const handleLogin = useCallback( () => {
+    navigate('/signIn');
+  }, [navigate])
 
-  useEffect(() => {
-    const handleLogin = () => {
+  const handleLogout = useCallback( async () => {
+    try {
+      await signOut(auth);
       navigate('/signIn');
+    } catch (e) {//current error handling does not catch and alert unsuccessful logouts
+      console.log(`There was an error signing out: ${e.message}`);
     }
+  }, [navigate])
 
-    const handleLogout = async () => {
-      try {
-        await signOut(auth);
-        navigate('/signIn');
-      } catch (e) {//current error handling does not catch and alert unsuccessful logouts
-        console.log(`There was an error signing out: ${e.message}`);
-      }
-    };
-
-    const authenticatedPages = [['Conflicts', '/conflictList'], ['Create conflict', '/addEvent']];
-    const authenticatedAccountButton = ['Log Out', ()=>{handleLogout()}];
-    const anonAccountButton = ['Log In', ()=>{handleLogin()}];
-    
-    if(currentUser){
-      setPages(authenticatedPages);
-      setAccountButton(authenticatedAccountButton);
-      setToggleIcon(<CustomMenuIcon onClick={toggleDrawer("left", true)} />);
-      setToggleJoinButton(null);
-    } else {
-      setPages([]);
-      setAccountButton(anonAccountButton);
-      setToggleIcon(null);
-      setToggleJoinButton(<CustomButton onClickFunction={()=>{handleJoinClick()}} buttonText="Join" />);
-    }
-  }, [currentUser]);
-
-  const handleJoinClick = () => {
+  const handleJoinClick = useCallback(() => {
     navigate('/signUp');
-  }
+  }, [navigate])
 
   const handleMenuLogoClick = () => {
     navigate('/');
   }
 
-  const toggleDrawer = (anchor, open) => (event) => {
+  const toggleDrawer = useCallback((anchor, open) => (event) => {
     if (
       event.type === "keydown" &&
       (event.type === "Tab" || event.type === "Shift")
@@ -78,8 +59,32 @@ export const Navbar = (props) => {
       return;
     }
     setMobileMenu({ ...mobileMenu, [anchor]: open });
-  };
+  }, [mobileMenu]);
 
+
+  //useEffects:
+  useEffect(() => {
+    const authenticatedPages = [['Conflicts', '/conflictList'], ['Create conflict', '/addEvent']];
+    setPages(currentUser ? authenticatedPages : []);
+  }, [currentUser])
+
+  useEffect(() => {
+    const authenticatedAccountButton = ['Log Out', handleLogout];
+    const anonAccountButton = ['Log In', handleLogin];
+    setAccountButton(currentUser ? authenticatedAccountButton : anonAccountButton);
+  }, [currentUser, handleLogin, handleLogout])
+
+  useEffect(() => {
+    if(currentUser){
+      setToggleIcon(<CustomMenuIcon onClick={toggleDrawer("left", true)} />);
+      setToggleJoinButton(null);
+    } else {
+      setToggleIcon(null);
+      setToggleJoinButton(<CustomButton onClickFunction={()=>{handleJoinClick()}} buttonText="Join" />);
+    }
+  }, [currentUser, handleJoinClick, toggleDrawer]);
+
+  //functional components:
   const list = (anchor) => (
     <Box
       sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 250 }}

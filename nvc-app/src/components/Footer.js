@@ -1,11 +1,9 @@
 import * as React from "react";
 import Container from "@mui/material/Container";
-import { Link } from 'react-router-dom';
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
-import { IconButton } from "@mui/material";
 
 export default function Footer() {
   return (

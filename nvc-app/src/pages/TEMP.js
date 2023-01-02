@@ -1,38 +1,42 @@
-import { signOut } from 'firebase/auth';
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { auth } from '../firebase';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types'
 import Container from '@mui/material/Container';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
 const TEMP = props => {
-  const {user} = props;
-  const navigate = useNavigate();
+  const {userId} = props;
 
-  const handleLogout = async () => {
-    try {
-      await signOut(auth);
-      navigate('/');
-    } catch (e) {
-      console.log(e.message);
-    }
-  };
+  console.log(userId);
+
+  const [error, setError] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [conflicts, setConflicts] = useState([]);
+
+  useEffect(() => {
+    fetch(`https://localhost:7070/api/conflicts?userId=${userId}`, {
+      mode: 'no-cors',
+    })
+      .then(response => response.json())
+      .then((jsonifiedResponse) => {
+          setConflicts(jsonifiedResponse.results)
+          setIsLoaded(true)
+          console.log(jsonifiedResponse.results)
+        })
+      .catch((error) => {
+        setError(error)
+        setIsLoaded(true)
+      });
+    }, [userId])
+
   return (
     <Container>
-      <Typography variant='h4'>USER EMAIL: {user && user.email}</Typography>
-      <Button color='primary' variant='contained'
-        onClick={handleLogout}
-        >
-          Logout
-      </Button>
+      <Typography variant='h4'>conflicts: {conflicts}</Typography>
     </Container>
   )
 }
 
 TEMP.propTypes = {
-  user : PropTypes.object
+  userId : PropTypes.string
 }
 
 export default TEMP
