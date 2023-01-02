@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
-
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -9,12 +8,10 @@ import FormLabel from '@mui/material/FormLabel';
 import MicNoneIcon from '@mui/icons-material/MicNone';
 import MicIcon from '@mui/icons-material/Mic';
 import { IconButton, InputAdornment } from '@mui/material';
-import { Link } from 'react-router-dom';
 
 const AddDescription = (props) => {
 
   const {formData, setFormData} = props;
-
   const {
     transcript,
     listening,
@@ -53,87 +50,71 @@ const AddDescription = (props) => {
   }
   
   return (
-<>
-    <Box sx={{mt: 5, mr:5, ml:5, mb: 5}}>
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
+    <>
+      <Box sx={{mt: 5, mr:5, ml:5, mb: 5}}>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <TextField
+              required
+              fullWidth
+              id='title'
+              defaultValue={formData.title}
+              label="Give it a simple title:"
+              name='title'
+              onChange={(e) => {
+                setFormData({ ...formData, title: e.target.value });
+              }}
+            />
+          </Grid>
+          <Grid item xs={12}>
           <TextField
-            required
-            fullWidth
-            id='title'
-            defaultValue={formData.title}
-            label="Give it a simple title:"
-            name='title'
+            id="date"
+            defaultValue={formData.date}
+            label="Choose an aproximate date this happened:"
+            type="date"
             onChange={(e) => {
-              setFormData({ ...formData, title: e.target.value });
+              setFormData({ ...formData, date: e.target.value });
+              console.log(e.target.value);
+            }}
+            sx={{ width: 220 }}
+            InputLabelProps={{
+              shrink: true,
             }}
           />
-        </Grid>
-        <Grid item xs={12}>
-        <TextField
-          id="date"
-          defaultValue={formData.date}
-          label="Choose an aproximate date this happened:"
-          type="date"
-          onChange={(e) => {
-            setFormData({ ...formData, date: e.target.value });
-            console.log(e.target.value);
-          }}
-          sx={{ width: 220 }}
-          InputLabelProps={{
-            shrink: true,
-          }}
-        />
-        </Grid>
-        {/* {listening ? <IconButton color="secondary" onClick = {() => {handleStopMicrophone()}} aria-label="mic off">
-              < MicNoneIcon />
-            </IconButton> : 
-        <IconButton onClick={() => {handleStartMicrophone()}} aria-label="mic on">
-          <MicIcon />
-        </IconButton>} */}
-        
-        {/* <div>
-          <p>
-            <button className='btn' onClick={() => {handleStartMicrophone()}}>
-              Start
-            </button>
-            <button className='btn' onClick={() => {handleStopMicrophone()}}>Stop</button>
-            Microphone: {listening ? 'on' : 'off'}
-          </p>
-        </div>    */}
+          </Grid>
 
-        <Grid item xs={12}>
-          <FormLabel>Let it out! Describe what happened with text or press the microphone button for text-to-speech!</FormLabel>
-          <TextField
-            fullWidth
-            id='description'
-            label=""
-            name='description'
-            multiline
-            rows={5}
-            value={ listening ? formData.description.concat(' ' + transcript) : formData.description }
-            onChange={handleDescriptionInputChange}
-            InputProps={{ 
-              endAdornment: (
-                <InputAdornment position="end">
-                  {listening ? 
-                  <IconButton 
-                    color="secondary" 
-                    onClick = {() => {handleStopMicrophone()}} aria-label="mic off">
-                      < MicNoneIcon />
-                  </IconButton> 
-                  : 
-                  <IconButton 
-                    onClick={() => {handleStartMicrophone()}} aria-label="mic on">
-                      <MicIcon />
-                  </IconButton>}
-                </InputAdornment>
-              )
-            }}
-          />
+          <Grid item xs={12}>
+            <FormLabel>Let it out! Describe what happened with text or press the microphone button for text-to-speech!</FormLabel>
+            <TextField
+              fullWidth
+              id='description'
+              label=""
+              name='description'
+              multiline
+              rows={5}
+              value={ listening ? formData.description.concat(' ' + transcript) : formData.description }
+              onChange={handleDescriptionInputChange}
+              InputProps={{ 
+                endAdornment: (
+                  <InputAdornment position="end">
+                    {listening ? 
+                    <IconButton 
+                      color="secondary" 
+                      onClick = {() => {handleStopMicrophone()}} aria-label="mic off">
+                        < MicNoneIcon />
+                    </IconButton> 
+                    : 
+                    <IconButton 
+                      onClick={() => {handleStartMicrophone()}} aria-label="mic on">
+                        <MicIcon />
+                    </IconButton>}
+                  </InputAdornment>
+                )
+              }}
+            />
+          </Grid>
         </Grid>
-      </Grid>
-    </Box>
+      </Box>
     </>
   )
 }

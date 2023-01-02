@@ -1,4 +1,4 @@
-import { Link, useParams, useNavigate } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import PropTypes from "prop-types";
 import React from "react";
 
@@ -8,7 +8,7 @@ const NeedsStatement = (props) => {
 
   const thisConflict = props.conflictList.find((conflict) => conflict.id === conflictId);
 
-  const { description, feeling, need, needsStatement, apologyStatement, userId } = thisConflict;
+  const { description, feeling, need } = thisConflict;
 
   function createNeedsStatement(feeling, need){
     const needsStatement = `When you ____, I felt ${feeling}, I need ${need}.`

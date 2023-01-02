@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import AddConflict from '../components/AddConflict';
 import AddFeelings from '../components/AddFeelings';
 import AddNeeds from '../components/AddNeeds';
 import AddDescription from '../components/AddDescription';
@@ -10,8 +9,6 @@ import Box from '@mui/material/Box';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';

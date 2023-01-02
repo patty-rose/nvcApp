@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Link, useNavigate } from 'react-router-dom';
-import Paper from '@mui/material/Paper'
 import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
@@ -27,7 +26,7 @@ const ExpandMore = styled((props) => {
 }));
 
 export function ConflictCard(props) {
-  const {title, conflictDate, description, feeling, need, needsStatement, apologyStatement, id} = props;
+  const {title, conflictDate, description, needsStatement, apologyStatement, id} = props;
   const [expanded, setExpanded] = React.useState(false);
   const navigate = useNavigate();
 
@@ -38,14 +37,6 @@ export function ConflictCard(props) {
   const handleCardClick = (thisId) => {
     navigate(`/${thisId}`);
   };
-
-  const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  }));
 
   const cardActions = (
     <CardActions disableSpacing>

@@ -35,7 +35,6 @@
 <li> open terminal or bash, and navigate to the root level of the project, enter "npm install".<li>
 <li> After the dependencies have been loaded, in the terminal, run "npm run start". This should bring up a browswer to localhost3000 and start the app.<li>
 
-
 </ul>
 </ul>
 <h2>Project Status</h2>
