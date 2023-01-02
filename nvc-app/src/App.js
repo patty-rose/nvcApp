@@ -28,7 +28,6 @@ import AddConflictForm from "./pages/AddConflictForm.js";
 function App() {
   //state:
   const [mainConflictList, setMainConflictList] = useState([]);
-  const [error, setError] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
 
   //Auth object & observer:
@@ -81,7 +80,7 @@ function App() {
         setMainConflictList(conflictsByDate);
       },
       (e) => {
-        setError(e.message);
+        console.log(e.message);
       }
     );
 
@@ -125,7 +124,7 @@ function App() {
             path="conflictList"
             element={
               <ProtectedRoute>
-                <ConflictList conflictList={mainConflictList} />
+                <ConflictList conflictList={mainConflictList}/>
               </ProtectedRoute>
             }
           />

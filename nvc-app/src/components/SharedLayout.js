@@ -1,13 +1,13 @@
-import { Outlet } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import Navbar from './Navbar';
-import Footer from './Footer';
+import { Outlet } from "react-router-dom";
+import PropTypes from "prop-types";
+import Navbar from "./Navbar";
+import Footer from "./Footer";
 
-const SharedLayout = props => {
-  const {user} = props;
+const SharedLayout = (props) => {
+  const { user } = props;
   return (
     <>
-      <Navbar currentUser = {user}/>
+      <Navbar currentUser={user} />
       <Outlet />
       <Footer />
     </>
@@ -15,7 +15,7 @@ const SharedLayout = props => {
 };
 
 SharedLayout.propTypes = {
-  user : PropTypes.object
-}
+  user: PropTypes.object,
+};
 
 export default SharedLayout;

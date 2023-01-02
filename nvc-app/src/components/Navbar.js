@@ -1,87 +1,94 @@
-
-
-import React, { useCallback, useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useCallback, useEffect, useState } from "react";
+import PropTypes from "prop-types";
+import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../firebase.js";
 import { signOut } from "firebase/auth";
-
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import IconButton from '@mui/material/IconButton';
+import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Container } from "@mui/system";
 import CustomButton from "./CustomButton";
-import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
-import Button from '@mui/material/Button';
-import {
-  Drawer,
-  List,
-  ListItem,
-  styled,
-} from "@mui/material";
-
+import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
+import Button from "@mui/material/Button";
+import { Drawer, List, ListItem, styled } from "@mui/material";
 
 export const Navbar = (props) => {
   const [pages, setPages] = useState([]);
   const [toggleIcon, setToggleIcon] = useState(null);
   const [toggleJoinButton, setToggleJoinButton] = useState(null);
-  const [accountButton, setAccountButton] = useState([])
+  const [accountButton, setAccountButton] = useState([]);
   const [mobileMenu, setMobileMenu] = useState({ left: false });
   const navigate = useNavigate();
-  const {currentUser} = props;
+  const { currentUser } = props;
 
   //click handlers:
-  const handleLogin = useCallback( () => {
-    navigate('/signIn');
-  }, [navigate])
+  const handleLogin = useCallback(() => {
+    navigate("/signIn");
+  }, [navigate]);
 
-  const handleLogout = useCallback( async () => {
+  const handleLogout = useCallback(async () => {
     try {
       await signOut(auth);
-      navigate('/signIn');
-    } catch (e) {//current error handling does not catch and alert unsuccessful logouts
+      navigate("/signIn");
+    } catch (e) {
+      //current error handling does not catch and alert unsuccessful logouts
       console.log(`There was an error signing out: ${e.message}`);
     }
-  }, [navigate])
+  }, [navigate]);
 
   const handleJoinClick = useCallback(() => {
-    navigate('/signUp');
-  }, [navigate])
+    navigate("/signUp");
+  }, [navigate]);
 
   const handleMenuLogoClick = () => {
-    navigate('/');
-  }
+    navigate("/");
+  };
 
-  const toggleDrawer = useCallback((anchor, open) => (event) => {
-    if (
-      event.type === "keydown" &&
-      (event.type === "Tab" || event.type === "Shift")
-    ) {
-      return;
-    }
-    setMobileMenu({ ...mobileMenu, [anchor]: open });
-  }, [mobileMenu]);
+  const toggleDrawer = useCallback(
+    (anchor, open) => (event) => {
+      if (
+        event.type === "keydown" &&
+        (event.type === "Tab" || event.type === "Shift")
+      ) {
+        return;
+      }
+      setMobileMenu({ ...mobileMenu, [anchor]: open });
+    },
+    [mobileMenu]
+  );
 
   //useEffect hooks:
   useEffect(() => {
-    const authenticatedPages = [['Conflicts', '/conflictList'], ['Create conflict', '/addEvent']];
+    const authenticatedPages = [
+      ["Conflicts", "/conflictList"],
+      ["Create conflict", "/addEvent"],
+    ];
     setPages(currentUser ? authenticatedPages : []);
-  }, [currentUser])
+  }, [currentUser]);
 
   useEffect(() => {
-    const authenticatedAccountButton = ['Log Out', handleLogout];
-    const anonAccountButton = ['Log In', handleLogin];
-    setAccountButton(currentUser ? authenticatedAccountButton : anonAccountButton);
-  }, [currentUser, handleLogin, handleLogout])
+    const authenticatedAccountButton = ["Log Out", handleLogout];
+    const anonAccountButton = ["Log In", handleLogin];
+    setAccountButton(
+      currentUser ? authenticatedAccountButton : anonAccountButton
+    );
+  }, [currentUser, handleLogin, handleLogout]);
 
   useEffect(() => {
-    if(currentUser){
+    if (currentUser) {
       setToggleIcon(<CustomMenuIcon onClick={toggleDrawer("left", true)} />);
       setToggleJoinButton(null);
     } else {
       setToggleIcon(null);
-      setToggleJoinButton(<CustomButton onClickFunction={()=>{handleJoinClick()}} buttonText="Join" />);
+      setToggleJoinButton(
+        <CustomButton
+          onClickFunction={() => {
+            handleJoinClick();
+          }}
+          buttonText="Join"
+        />
+      );
     }
   }, [currentUser, handleJoinClick, toggleDrawer]);
 
@@ -94,18 +101,20 @@ export const Navbar = (props) => {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-      {pages.map((page) => (
-        <ListItem key={page}>
-          <Typography textAlign="center">
-            <Link 
-            style={{ 
-              textDecoration: 'none', 
-              color: 'inherit'}} 
-              to={page[1]} >
-              {page[0]}
-            </Link>
-          </Typography>
-        </ListItem>
+        {pages.map((page) => (
+          <ListItem key={page}>
+            <Typography textAlign="center">
+              <Link
+                style={{
+                  textDecoration: "none",
+                  color: "inherit",
+                }}
+                to={page[1]}
+              >
+                {page[0]}
+              </Link>
+            </Typography>
+          </ListItem>
         ))}
       </List>
     </Box>
@@ -161,16 +170,23 @@ export const Navbar = (props) => {
             onClose={toggleDrawer("left", false)}
           >
             {/* INNER POP OUT MENU LOGO BUTTON */}
-            <Box sx={{display: "flex", alignItems: "center", mt: 4, ml: 2}}>
-              <IconButton 
+            <Box sx={{ display: "flex", alignItems: "center", mt: 4, ml: 2 }}>
+              <IconButton
                 size="large"
-                aria-label="Home" 
+                aria-label="Home"
                 onClick={handleMenuLogoClick}
                 color="primary"
               >
-                <QuestionAnswerIcon color="primary"/>
-                <Typography color="primary" variant="h4" sx={{
-                ml: 2}}>Venter</Typography>
+                <QuestionAnswerIcon color="primary" />
+                <Typography
+                  color="primary"
+                  variant="h4"
+                  sx={{
+                    ml: 2,
+                  }}
+                >
+                  Venter
+                </Typography>
               </IconButton>
             </Box>
             {list("left")}
@@ -178,25 +194,36 @@ export const Navbar = (props) => {
 
           {/* LOGO BUTTON */}
           <Box>
-            <IconButton 
+            <IconButton
               size="large"
-              aria-label="Home" 
+              aria-label="Home"
               onClick={handleMenuLogoClick}
             >
-              <QuestionAnswerIcon color="primary"/>
-              <Typography color="primary" variant="h6" sx={{
-                ml: 1}}>Venter</Typography>
+              <QuestionAnswerIcon color="primary" />
+              <Typography
+                color="primary"
+                variant="h6"
+                sx={{
+                  ml: 1,
+                }}
+              >
+                Venter
+              </Typography>
             </IconButton>
           </Box>
         </Box>
-        
+
         {/* CENTER NAVBAR LINKS */}
         <NavbarLinksBox>
           {pages.map((page) => (
-            <Link key={page} to={page[1]} style={{textDecoration: 'none', color: '#4F5361'}} >
-                <Typography variant="body2" sx={{fontWeight: 'bold'}}>
-                  {page[0]}
-                </Typography>
+            <Link
+              key={page}
+              to={page[1]}
+              style={{ textDecoration: "none", color: "#4F5361" }}
+            >
+              <Typography variant="body2" sx={{ fontWeight: "bold" }}>
+                {page[0]}
+              </Typography>
             </Link>
           ))}
         </NavbarLinksBox>
@@ -211,8 +238,11 @@ export const Navbar = (props) => {
           gap: "1rem",
         }}
       >
-        <Button onClick={accountButton[1]} style={{textDecoration: 'none', color: '#4F5361'}}>
-          <Typography variant="body2" sx={{fontWeight: 'bold'}}>
+        <Button
+          onClick={accountButton[1]}
+          style={{ textDecoration: "none", color: "#4F5361" }}
+        >
+          <Typography variant="body2" sx={{ fontWeight: "bold" }}>
             {accountButton[0]}
           </Typography>
         </Button>
@@ -223,7 +253,7 @@ export const Navbar = (props) => {
 };
 
 Navbar.propTypes = {
-  currentUser : PropTypes.object
-}
+  currentUser: PropTypes.object,
+};
 
 export default Navbar;

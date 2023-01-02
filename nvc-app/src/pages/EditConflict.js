@@ -7,7 +7,6 @@ import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
-
 import TextField from "@mui/material/TextField";
 
 function EditConflict(props) {
@@ -17,12 +16,13 @@ function EditConflict(props) {
   const thisConflict = props.conflictList.find(
     (conflict) => conflict.id === conflictId
   );
+
   const [formData, setFormData] = useState({
     title: thisConflict.title,
     conflictDate: thisConflict.conflictDate,
     description: thisConflict.description,
-    feelings: thisConflict.feelings,
-    needs: thisConflict.needs,
+    feeling: thisConflict.feeling,
+    need: thisConflict.need,
     needsStatement: thisConflict.needsStatement,
     apologyStatement: thisConflict.apologyStatement,
   });
@@ -61,8 +61,8 @@ function EditConflict(props) {
       title: formData.title,
       conflictDate: formData.conflictDate,
       description: formData.description,
-      feelings: formData.feelings,
-      needs: formData.needs,
+      feeling: formData.feeling,
+      need: formData.need,
       needsStatement: formData.needsStatement,
       apologyStatement: formData.apologyStatement,
       id: thisConflict.id,
@@ -74,9 +74,7 @@ function EditConflict(props) {
   return (
     <React.Fragment>
       <Card elevation={0} sx={{ xs: "flex", width: "85%", ml: 15 }}>
-        <CardHeader
-          title={`Edit Conflict`}
-        />
+        <CardHeader title={`Edit Conflict`} />
         <CardContent>
           <Card elevation={2} sx={{ xs: "flex", width: "98%" }}>
             <Box
@@ -128,23 +126,23 @@ function EditConflict(props) {
                   <TextField
                     margin="normal"
                     fullWidth
-                    id="feelings"
+                    id="feeling"
                     label="Feeling:"
-                    name="feelings"
-                    defaultValue={formData.feelings}
+                    name="feeling"
+                    defaultValue={formData.feeling}
                     onChange={(e) => {
-                      setFormData({ ...formData, feelings: e.target.value });
+                      setFormData({ ...formData, feeling: e.target.value });
                     }}
                   />
                   <TextField
                     margin="normal"
                     fullWidth
-                    id="needs"
+                    id="need"
                     label="Unmet Need:"
-                    name="needs"
-                    defaultValue={formData.needs}
+                    name="need"
+                    defaultValue={formData.need}
                     onChange={(e) => {
-                      setFormData({ ...formData, needs: e.target.value });
+                      setFormData({ ...formData, need: e.target.value });
                     }}
                   />
                   {formData.apologyStatement
