@@ -50,44 +50,6 @@ function App() {
     return children;
   };
 
-  //query firestore db for 'conflicts' docs:
-  useEffect(() => {
-    const conflictsRef = collection(db, "conflicts");
-    const queryByUidAndDate = query(
-      conflictsRef,
-      where("userId", "==", currentUser && currentUser.uid)
-    );
-
-    const queryLoader = onSnapshot(
-      queryByUidAndDate,
-      (querySnapshot) => {
-        const conflicts = [];
-        querySnapshot.forEach((doc) => {
-          conflicts.push({
-            title: doc.data().title,
-            description: doc.data().description,
-            feeling: doc.data().feeling,
-            need: doc.data().need,
-            needsStatement: doc.data().needsStatement,
-            apologyStatement: doc.data().apologyStatement,
-            id: doc.id,
-            conflictDate: doc.data().conflictDate,
-            userId: doc.data().userId,
-          });
-        });
-        const conflictsByDate = conflicts.sort(function (a, b) {
-          return new Date(b.conflictDate) - new Date(a.conflictDate);
-        });
-        setMainConflictList(conflictsByDate);
-      },
-      (e) => {
-        setError(e.message);
-      }
-    );
-
-    return () => queryLoader();
-  }, [currentUser]);
-
   //dotnet backend database query:
   const [isLoaded, setIsLoaded] = useState(false);
   const [dotnetConflictList, setDotnetConflictList] = useState([]);
@@ -106,16 +68,11 @@ function App() {
         setError(error);
         setIsLoaded(true);
       });
-  }, [currentUser]);
+  }, [currentUser, ConflictList]);
 
   //dotnet backend CRUD handlers:
 
   //CRUD handlers:
-  const handleAddingNewConflictToList2 = async (newConflictData) => {
-    const docRef = await addDoc(collection(db, "conflicts"), newConflictData);
-    return docRef;
-  };
-
   const handleAddingNewConflictToList = async (newConflict) => {
     fetch("/api/conflicts", {
       method: "POST",
@@ -135,12 +92,29 @@ function App() {
       });
   };
 
+  const handleDeletingConflict = async (conflictId) => {
+    fetch("/api/conflicts/" + conflictId, {
+      method: "Delete"
+    })
+      .then((response) => {
+        response.json()
+      })
+      .then((jsonifiedResponse) => {
+        const newList = dotnetConflictList.filter((conflict) => conflict.conflictId != conflictId);
+        setDotnetConflictList(newList);
+        console.log("deleted:", jsonifiedResponse);
+      })
+      .catch((error) => {
+        setError(error);
+      });
+  };
+
   const handleEditingConflictInList = async (conflictToEdit) => {
     const conflictRef = doc(db, "conflicts", conflictToEdit.id);
     await updateDoc(conflictRef, conflictToEdit);
   };
 
-  const handleDeletingConflict = async (id) => {
+  const handleDeletingConflict2 = async (id) => {
     await deleteDoc(doc(db, "conflicts", id));
   };
 
@@ -183,7 +157,7 @@ function App() {
           ></Route>
 
           <Route
-            path=":conflictId"
+            path=":thisConflictId"
             element={
               <ProtectedRoute>
                 <ConflictDetail

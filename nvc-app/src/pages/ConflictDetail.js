@@ -15,16 +15,16 @@ import { FormLabel, IconButton } from "@mui/material";
 import CustomButton from "../components/CustomButton";
 
 const ConflictDetail = (props) => {
-  const { conflictId } = useParams();
+  const { thisConflictId } = useParams();
   const navigate = useNavigate();
 
-  const thisConflict = props.conflictList.find(
-    (conflict) => conflict.id === conflictId
-  );
-
-  console.log(thisConflict);
-  console.log(conflictId);
-  console.log(props.conflictList);
+  const thisConflict = props.conflictList.find((conflict) => {
+    console.log(thisConflictId);
+    if (conflict.conflictId === parseInt(thisConflictId)) {
+      console.log(conflict)
+      return conflict;
+    }
+  });
 
   const {
     title,
@@ -34,8 +34,9 @@ const ConflictDetail = (props) => {
     need,
     needsStatement,
     apologyStatement,
-    id,
+    conflictId,
   } = thisConflict;
+  console.log(conflictId)
 
   function handleClickingEdit(thisId) {
     navigate(`/edit/${thisId}`);
@@ -73,7 +74,7 @@ const ConflictDetail = (props) => {
           <IconButton
             aria-label="edit"
             onClick={() => {
-              handleEditNeedsClick(id);
+              handleEditNeedsClick(thisConflictId);
             }}
           >
             <EditIcon />
@@ -94,7 +95,7 @@ const ConflictDetail = (props) => {
           <IconButton
             aria-label="edit"
             onClick={() => {
-              handleEditApologyClick(id);
+              handleEditApologyClick(thisConflictId);
             }}
           >
             <EditIcon />
@@ -116,7 +117,7 @@ const ConflictDetail = (props) => {
                   <IconButton
                     aria-label="edit"
                     onClick={() => {
-                      handleClickingDelete(id);
+                      handleClickingDelete(thisConflictId);
                     }}
                   >
                     <DeleteForeverIcon />
@@ -124,7 +125,7 @@ const ConflictDetail = (props) => {
                   <IconButton
                     aria-label="edit"
                     onClick={() => {
-                      handleClickingEdit(id);
+                      handleClickingEdit(thisConflictId);
                     }}
                   >
                     <EditIcon />
@@ -171,7 +172,7 @@ const ConflictDetail = (props) => {
                   <Grid item xs={6}>
                     <CustomButton
                       onClickFunction={() => {
-                        handleCreateNeedsClick(id);
+                        handleCreateNeedsClick(thisConflictId);
                       }}
                       buttonText="Create a needs request statement!"
                     />
@@ -184,7 +185,7 @@ const ConflictDetail = (props) => {
                   <Grid item xs={6}>
                     <CustomButton
                       onClickFunction={() => {
-                        handleCreateApologyClick(id);
+                        handleCreateApologyClick(thisConflictId);
                       }}
                       buttonText="Write an apology!"
                     />
