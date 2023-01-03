@@ -19,6 +19,8 @@ import AddConflictForm from "./pages/AddConflictForm.js";
 function App() {
   //state:
   const [currentUser, setCurrentUser] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [dotnetConflictList, setDotnetConflictList] = useState([]);
 
   //Auth object & observer:
   const auth = getAuth();
@@ -40,9 +42,6 @@ function App() {
   };
 
   //dotnet backend database query:
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [dotnetConflictList, setDotnetConflictList] = useState([]);
-
   useEffect(() => {
     fetch(`api/conflicts?userId=${currentUser && currentUser.uid}`)
       .then((response) => response.json())
@@ -55,8 +54,6 @@ function App() {
         setIsLoaded(true);
       });
   }, [currentUser]);
-
-  //dotnet backend CRUD handlers:
 
   //CRUD handlers:
   const handleAddingNewConflictToList = async (newConflict) => {
