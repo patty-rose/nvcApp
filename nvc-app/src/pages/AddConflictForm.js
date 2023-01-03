@@ -53,7 +53,7 @@ const AddConflictForm = (props) => {
     }
   }
 
-  const handleAddConflictSubmission = async () => {
+  const handleAddConflictSubmission1 = async () => {
     const docRef = await props.onNewConflictCreation({
       title: formData.title,
       description: formData.description, 
@@ -66,6 +66,37 @@ const AddConflictForm = (props) => {
     });
     navigate(`/${docRef.id}`);
   }
+
+  const handleAddConflictSubmission = async () => {
+    const newConflict = {
+      title: formData.title,
+      description: formData.description, 
+      feeling: formData.feeling, 
+      need: formData.need,
+      needsStatement: null,
+      apologyStatement: null,
+      conflictDate: formData.date,
+      userId: props.userId
+    }
+    console.log(newConflict);
+    console.log(JSON.stringify(newConflict));
+
+    const response = await fetch("/api/conflicts", {
+      method: "POST",
+      body: JSON.stringify(newConflict),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const json = await response.json();
+
+    if (!response.ok) {
+      console.log(json);
+    }
+    if (response.ok) {
+      console.log("new backpack added:", json);
+    }
+  };
 
   return (
     <>

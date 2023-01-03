@@ -103,7 +103,6 @@ function App() {
     }, [currentUser])
 
   //dotnet backend CRUD handlers:
-  handleAddingNewConflictToList
 
 
   //CRUD handlers:
