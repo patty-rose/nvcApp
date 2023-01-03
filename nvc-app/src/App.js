@@ -52,13 +52,13 @@ function App() {
   //query firestore db for 'conflicts' docs:
   useEffect(() => {
     const conflictsRef = collection(db, "conflicts");
-    const queryByUidAndDate = query(
+    const queryByUid = query(
       conflictsRef,
       where("userId", "==", currentUser && currentUser.uid)
     );
 
     const unSubscribe = onSnapshot(
-      queryByUidAndDate,
+      queryByUid,
       (querySnapshot) => {
         const conflicts = [];
         querySnapshot.forEach((doc) => {
