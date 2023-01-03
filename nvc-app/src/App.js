@@ -124,7 +124,7 @@ function App() {
             path="conflictList"
             element={
               <ProtectedRoute>
-                <ConflictList conflictList={mainConflictList}/>
+                <ConflictList conflictList={mainConflictList} />
               </ProtectedRoute>
             }
           />

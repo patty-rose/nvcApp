@@ -75,7 +75,6 @@ const AddDescription = (props) => {
               type="date"
               onChange={(e) => {
                 setFormData({ ...formData, date: e.target.value });
-                console.log(e.target.value);
               }}
               sx={{ width: 220 }}
               InputLabelProps={{
