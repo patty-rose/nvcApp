@@ -105,7 +105,7 @@ ConflictCard.propTypes = {
   need: PropTypes.string,
   needsStatement: PropTypes.string,
   apologyStatement: PropTypes.string,
-  id: PropTypes.string,
+  id: PropTypes.number,
   conflictDate: PropTypes.string
 }
 

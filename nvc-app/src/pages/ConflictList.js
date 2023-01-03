@@ -42,8 +42,8 @@ const ConflictList = (props) => {
               need={conflict.need}
               needsStatement={conflict.needsStatement}
               apologyStatement={conflict.apologyStatement}
-              id={conflict.id}
-              key={conflict.id}/>
+              id={conflict.conflictId}
+              key={conflict.conflictId}/>
           )} 
         </Grid>
       </CardContent>
