@@ -19,9 +19,7 @@ const ConflictDetail = (props) => {
   const navigate = useNavigate();
 
   const thisConflict = props.conflictList.find((conflict) => {
-    console.log(thisConflictId);
     if (conflict.conflictId === parseInt(thisConflictId)) {
-      console.log(conflict)
       return conflict;
     }
   });
@@ -36,7 +34,6 @@ const ConflictDetail = (props) => {
     apologyStatement,
     conflictId,
   } = thisConflict;
-  console.log(conflictId)
 
   function handleClickingEdit(thisId) {
     navigate(`/edit/${thisId}`);

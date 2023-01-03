@@ -76,7 +76,6 @@ const AddDescription = (props) => {
           type="date"
           onChange={(e) => {
             setFormData({ ...formData, date: e.target.value });
-            console.log(e.target.value);
           }}
           sx={{ width: 220 }}
           InputLabelProps={{
@@ -84,22 +83,6 @@ const AddDescription = (props) => {
           }}
         />
         </Grid>
-        {/* {listening ? <IconButton color="secondary" onClick = {() => {handleStopMicrophone()}} aria-label="mic off">
-              < MicNoneIcon />
-            </IconButton> : 
-        <IconButton onClick={() => {handleStartMicrophone()}} aria-label="mic on">
-          <MicIcon />
-        </IconButton>} */}
-        
-        {/* <div>
-          <p>
-            <button className='btn' onClick={() => {handleStartMicrophone()}}>
-              Start
-            </button>
-            <button className='btn' onClick={() => {handleStopMicrophone()}}>Stop</button>
-            Microphone: {listening ? 'on' : 'off'}
-          </p>
-        </div>    */}
 
         <Grid item xs={12}>
           <FormLabel>Let it out! Describe what happened with text or press the microphone button for text-to-speech!</FormLabel>

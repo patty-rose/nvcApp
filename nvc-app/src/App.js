@@ -1,16 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { db } from "./firebase.js";
-import {
-  collection,
-  addDoc,
-  onSnapshot,
-  doc,
-  updateDoc,
-  deleteDoc,
-  query,
-  where,
-} from "firebase/firestore";
+import { doc, updateDoc } from "firebase/firestore";
 import Home from "./pages/Splash";
 import ConflictList from "./pages/ConflictList";
 import Error from "./pages/Error";
@@ -27,8 +18,6 @@ import AddConflictForm from "./pages/AddConflictForm.js";
 
 function App() {
   //state:
-  const [mainConflictList, setMainConflictList] = useState([]);
-  const [error, setError] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
 
   //Auth object & observer:
@@ -60,15 +49,12 @@ function App() {
       .then((jsonifiedResponse) => {
         setDotnetConflictList(jsonifiedResponse);
         setIsLoaded(true);
-        console.log("jsonified response:", jsonifiedResponse);
-        console.log("temp conflicts:", dotnetConflictList);
-        console.log("main conflicts list:", mainConflictList);
       })
       .catch((error) => {
-        setError(error);
+        console.log(error);
         setIsLoaded(true);
       });
-  }, [currentUser, ConflictList]);
+  }, [currentUser]);
 
   //dotnet backend CRUD handlers:
 
@@ -83,39 +69,52 @@ function App() {
     })
       .then((response) => response.json())
       .then((jsonifiedResponse) => {
-        console.log("new conflict added:", jsonifiedResponse);
         const newList = dotnetConflictList.concat(jsonifiedResponse);
         setDotnetConflictList(newList);
       })
       .catch((error) => {
-        setError(error);
+        console.log(error);
       });
   };
 
   const handleDeletingConflict = async (conflictId) => {
     fetch("/api/conflicts/" + conflictId, {
-      method: "Delete"
+      method: "Delete",
     })
-      .then((response) => {
-        response.json()
-      })
-      .then((jsonifiedResponse) => {
-        const newList = dotnetConflictList.filter((conflict) => conflict.conflictId != conflictId);
+      .then((response) => response.json())
+      .then(() => {
+        const newList = dotnetConflictList.filter(
+          (conflict) => conflict.conflictId != conflictId
+        );
         setDotnetConflictList(newList);
-        console.log("deleted:", jsonifiedResponse);
       })
       .catch((error) => {
-        setError(error);
+        console.log(error);
       });
   };
 
-  const handleEditingConflictInList = async (conflictToEdit) => {
-    const conflictRef = doc(db, "conflicts", conflictToEdit.id);
-    await updateDoc(conflictRef, conflictToEdit);
-  };
-
-  const handleDeletingConflict2 = async (id) => {
-    await deleteDoc(doc(db, "conflicts", id));
+  const handleEditingConflict = async (conflictToEdit) => {
+    fetch("/api/conflicts/" + conflictToEdit.conflictId, {
+      method: "PUT",
+      body: JSON.stringify(conflictToEdit),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        response.json();
+      })
+      .then(() => {
+        const newList = dotnetConflictList
+          .filter(
+            (conflict) => conflict.conflictId != conflictToEdit.conflictId
+          )
+          .concat(conflictToEdit);
+        setDotnetConflictList(newList);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -169,36 +168,36 @@ function App() {
           />
 
           <Route
-            path="edit/:conflictId"
+            path="edit/:thisConflictId"
             element={
               <ProtectedRoute>
                 <EditConflict
                   conflictList={dotnetConflictList}
-                  onEditConflict={handleEditingConflictInList}
+                  onEditConflict={handleEditingConflict}
                 />
               </ProtectedRoute>
             }
           />
 
           <Route
-            path="editNeedsStatement/:conflictId"
+            path="editNeedsStatement/:thisConflictId"
             element={
               <ProtectedRoute>
                 <EditNeedsStatement
                   conflictList={dotnetConflictList}
-                  onEditConflict={handleEditingConflictInList}
+                  onEditConflict={handleEditingConflict}
                 />
               </ProtectedRoute>
             }
           />
 
           <Route
-            path="editApologyStatement/:conflictId"
+            path="editApologyStatement/:thisConflictId"
             element={
               <ProtectedRoute>
                 <EditApologyStatement
                   conflictList={dotnetConflictList}
-                  onEditConflict={handleEditingConflictInList}
+                  onEditConflict={handleEditingConflict}
                 />
               </ProtectedRoute>
             }
