@@ -68,6 +68,7 @@ function EditConflict(props) {
       id: thisConflict.id,
       userId: thisConflict.userId,
     });
+    navigate(`/${conflictId}`)
   }
 
   return (
