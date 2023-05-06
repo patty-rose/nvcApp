@@ -3,6 +3,8 @@ Venter - [https://nvc2-e6e76.web.app/](https://nvc2-e6e76.web.app/)
 
 React and Javascript web application for managing personal conflicts. Firebase authentication and hosting, Firestore database, and Material-ui styling.
 
+![splash page of Venter site, with picture of two women sitting at a table and talking](./README-images/splashPage.png)
+
 General Information
 -------------------
 
@@ -27,6 +29,17 @@ Features
 *   User authentication
 *   user CRUD functionality for logging personal conflicts
 *   Voice to Text form input for describing your conlflict
+
+Screenshots
+-----------
+![dashboard for Venter site](./README-images/dashboard.png)
+![form for creating a needs statement from Venter site](./README-images/createNeeds.png)
+![form for finalizing a needs statement from Venter site](./README-images/finalizeNeeds.png)
+
+Planning materials
+------------------
+![components diagram for Venter site](./README-images/ComponentsDiagram.drawio.png)
+![wireframes and UI flow for Venter site](./README-images/ui-plan.png)
 
 Setup
 -----
