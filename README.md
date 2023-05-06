@@ -1,3 +1,14 @@
+
+![GitHub last commit](https://img.shields.io/github/last-commit/patty-rose/nvcApp?style=for-the-badge)
+![GitHub repo size](https://img.shields.io/github/repo-size/patty-rose/nvcApp?style=for-the-badge)
+
+![Javascript](https://img.shields.io/badge/JavaScript-F7DF1E.svg?style=for-the-badge&logo=JavaScript&logoColor=black)
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![Firebase](https://img.shields.io/badge/Firebase-039BE5?style=for-the-badge&logo=Firebase&logoColor=white)
+![MUI](https://img.shields.io/badge/MUI-%230081CB.svg?style=for-the-badge&logo=mui&logoColor=white)
+![NPM](https://img.shields.io/badge/NPM-%23CB3837.svg?style=for-the-badge&logo=npm&logoColor=white)
+![React Router](https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white)
+
 Venter - [https://nvc2-e6e76.web.app/](https://nvc2-e6e76.web.app/)
 ===================================================================
 
